@@ -29,35 +29,35 @@ parameters:
 # Key Vault
 - name: KeyVaultName
   type: string
-  default: KVName
+  #default: KVName
 - name: KeyVaultResourceGroupName
   type: string
-  default: fabric-rg
+  #default: fabric-rg
 - name: KeyVaultURL
   type: string
-  default: KVURL
+  #default: KVURL
 - name: KeyVaultBicepTemplateFilePath
   type: string
-  default: "$(Build.Repository.LocalPath)/.ado/.bicep/keyvault.bicep"
+  #default: "$(Build.Repository.LocalPath)/.ado/.bicep/keyvault.bicep"
 
 # storage account
 - name: StorageAccountName
   type: string
-  default: storageadfqa
+  #default: storageadfqa
 - name: StorageAccountResourceGroupName
   type: string
-  default: adf-qa
+  #default: adf-qa
 - name: StorageAccountBicepTemplateFilePath
   type: string
-  default: "$(Build.Repository.LocalPath)/.ado/.bicep/storage.bicep"
+  #default: "$(Build.Repository.LocalPath)/.ado/.bicep/storage.bicep"
 
 # app registration
 - name: app_display_name
   type: string
-  default: 'app-qa'
+  #default: 'app-qa'
 - name: AppRegistrationBicepTemplateFilePath
   type: string
-  default: "$(Build.Repository.LocalPath)/.ado/.bicep/appregistration.bicep"
+  #default: "$(Build.Repository.LocalPath)/.ado/.bicep/appregistration.bicep"
 
 
 

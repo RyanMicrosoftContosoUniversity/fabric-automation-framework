@@ -2,19 +2,19 @@
 
 variables:
 - name: resourceGroupName
-  value: 'rg-ado-dev'
+  value: 'fabric-rg'
 
 - name: location
   value: 'eastus2'
 
 - name: app_display_name
-  value: 'dev-app'
+  value: 'dev-app-test-rh-eus2'
 
 - name: subscriptionId
   value: '910ebf13-1058-405d-b6cf-eda03e5288d1'
 
 - name: keyVaultName
-  value: 'kv-ado-dev'
+  value: 'kv-fabric-non-prod-eus2-rh'
 
 - name: keyVaultURL
-  value: 'https://kv-ado-dev.vault.azure.net/'
+  value: 'https://kv-fabric-non-prod-eus2-rh.vault.azure.net/'
