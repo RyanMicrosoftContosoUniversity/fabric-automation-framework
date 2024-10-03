@@ -1,0 +1,8 @@
+{
+    "client_id": "15a84224-c1e2-45e0-a2f5-fc8f5206f81d",
+    "tenant_id": "35acf02c-4b87-4ae6-9221-ff5cafd430b4",
+    "authority": "https://login.microsoftonline.com/35acf02c-4b87-4ae6-9221-ff5cafd430b4",
+    "scope": ["https://graph.microsoft.com/.default"],
+    "spn_secret_name": "spn-secret",
+    "vault_url": "https://kvfabricnonprodeus2rh.vault.azure.net/"
+  }

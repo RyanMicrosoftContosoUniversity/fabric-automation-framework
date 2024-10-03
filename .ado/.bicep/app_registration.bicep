@@ -1,6 +1,6 @@
 param app_display_name string
 
-resource app 'Microsoft.Graph/applications@1.0' = {
+resource app 'Microsoft.Graph/applications@1.0.0' = {
   name: app_display_name
   properties: {
     displayName: app_display_name

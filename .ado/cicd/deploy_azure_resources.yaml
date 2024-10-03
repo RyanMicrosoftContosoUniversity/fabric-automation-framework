@@ -125,5 +125,3 @@ steps:
     scriptPath: "$(Build.Repository.LocalPath)/.ado/scripts/app_registration.sh"
     app_display_name: ${{ parameters.app_display_name }}
     subscriptionId: ${{ parameters.subscriptionId }}
-    keyVaultName: ${{ parameters.KeyVaultName }}
-    keyVaultURL: ${{ parameters.KeyVaultURL }}
