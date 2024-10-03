@@ -2,7 +2,7 @@
 parameters:
 - name: AzureResourceManagerConnection
   type: string
-  default: super-connection
+  default: fabric-sc
 
 # default resource group //if not needed for a specific resource
 - name: DefaultResourceGroupName
@@ -12,8 +12,10 @@ parameters:
 # Data Factory (ADF)
 - name: DataFactoryName
   type: string
+  default: DefaultDataFactory
 - name: ADFResourceGroupName
   type: string
+  default: DefaultResourceGroup
 - name: ADFBicepTemplateFilePath
   type: string
   default: "$(Build.Repository.LocalPath)/.ado/.bicep/adf.bicep"
@@ -21,10 +23,13 @@ parameters:
 # Key Vault
 - name: KeyVaultName
   type: string
+  default: KVName
 - name: KeyVaultResourceGroupName
   type: string
+  default: KVRGName
 - name: KeyVaultURL
   type: string
+  default: KVURL
 - name: KeyVaultBicepTemplateFilePath
   type: string
   default: "$(Build.Repository.LocalPath)/.ado/.bicep/keyvault.bicep"
