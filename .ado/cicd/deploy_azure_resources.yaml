@@ -29,13 +29,13 @@ parameters:
 # Key Vault
 - name: KeyVaultName
   type: string
-  default: kv-fabric-non-prod-eus2-rh
+  default: kvfabricnonprodeus2rh
 - name: KeyVaultResourceGroupName
   type: string
   default: fabric-rg
 - name: KeyVaultURL
   type: string
-  default: https://kv-fabric-non-prod-eus2-rh.vault.azure.net/
+  default: https://kvfabricnonprodeus2rh.vault.azure.net/
 - name: KeyVaultBicepTemplateFilePath
   type: string
   default: "$(Build.Repository.LocalPath)/.ado/.bicep/keyvault.bicep"
