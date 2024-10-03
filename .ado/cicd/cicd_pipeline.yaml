@@ -1,30 +1,31 @@
 name: Fabric-CICD-Pipeline-$(Date:yyyyMMdd)$(Rev:.r)
 
 
-branches:
-  include:
-    - develop
+pr:
+ branches:
+   include:
+     - develop
 
 
 pool:
   vmImage: 'windows-latest'
 
 stages:
-  -stage: Build&Deploy
-   displayName: 'Build and Deploy Azure Resources'
+- stage: Build_Deploy
+  displayName: 'Build and Deploy Azure Resources'
 
-   variables:
-     - template: .vars/dev_variables.yaml
+  variables:
+  - template: ../.vars/dev_variables.yaml
 
-   jobs:
-   - job: ValidateAndBuildArtifacts
-     displayName: 'Validate and Build Azure Resources via Bicep'
-     steps:
-     - template: cicd/deploy_azure_resources.yaml
-       parameters:
-         location: ${{variables.location}}
-         app_display_name: ${{variables.app_display_name}}
-         subscriptionId: ${{variables.subscriptionId}}
-         keyVaultName: ${{variables.keyVaultName}}
-         keyVaultURL: ${{variables.keyVaultURL}}
+  jobs:
+  - job: ValidateAndBuildArtifacts
+    displayName: 'Validate and Build Azure Resources via Bicep'
+    steps:
+    - template: ../cicd/deploy_azure_resources.yaml
+      parameters:
+        location: ${{variables.location}}
+        app_display_name: ${{variables.app_display_name}}
+        subscriptionId: ${{variables.subscriptionId}}
+        keyVaultName: ${{variables.keyVaultName}}
+        keyVaultURL: ${{variables.keyVaultURL}}
 
