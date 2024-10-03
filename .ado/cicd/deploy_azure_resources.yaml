@@ -32,7 +32,7 @@ parameters:
   default: KVName
 - name: KeyVaultResourceGroupName
   type: string
-  default: KVRGName
+  default: fabric-rg
 - name: KeyVaultURL
   type: string
   default: KVURL
@@ -87,7 +87,7 @@ steps:
 - task: CmdLine@2
   displayName: "Ready Key Vault Deployment"
   inputs:
-    script: "echo 'INFO: Will deploy to resource-group ${{ parameters.KeyVaultResourceGroupName }} and key vault ${{ parameters.KeyVaultName }} and kv url ${{ parameters.KeyVaultURL }} using template file ${{ parameters.KeyVaultBicepTemplateFilePath }} using service connection ${{parameters.AzureResourceManagerConnection}}'"
+    script: "echo 'INFO: Will deploy to resource-group ${{ parameters.DefaultResourceGroupName }} and key vault ${{ parameters.KeyVaultName }} and kv url ${{ parameters.KeyVaultURL }} using template file ${{ parameters.KeyVaultBicepTemplateFilePath }} using service connection ${{parameters.AzureResourceManagerConnection}}'"
 
 - task: AzureCLI@2
   displayName: "Key Vault Deploy Via Bicep"
@@ -98,7 +98,7 @@ steps:
     inlineScript: |
       az deployment group create \
         --name "MyKeyVaultDeployment$(Build.BuildNumber)" \
-        --resource-group "${{ parameters.KeyVaultResourceGroupName }}" \
+        --resource-group "${{ parameters.DefaultResourceGroupName }}" \
         --template-file "${{ parameters.KeyVaultBicepTemplateFilePath }}" \
         --parameters keyVaultName="${{ parameters.KeyVaultName }}" keyVaultURL="${{ parameters.KeyVaultURL }}" 
 
