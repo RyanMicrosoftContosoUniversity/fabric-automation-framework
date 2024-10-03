@@ -14,7 +14,7 @@ variables:
   value: '910ebf13-1058-405d-b6cf-eda03e5288d1'
 
 - name: keyVaultName
-  value: 'kv-fabric-non-prod-eus2-rh'
+  value: kvfabricnonprodeus2rh
 
 - name: keyVaultURL
-  value: 'https://kv-fabric-non-prod-eus2-rh.vault.azure.net/'
+  value: https://kvfabricnonprodeus2rh.vault.azure.net/
