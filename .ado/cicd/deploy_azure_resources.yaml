@@ -7,7 +7,13 @@ parameters:
 # default resource group //if not needed for a specific resource
 - name: DefaultResourceGroupName
   type: string
-  default: rg-ado-dev
+  default: fabric-rg
+- name: location
+  type: string
+  default: eastus2
+- name: subscriptionId
+  type: string
+  default: 910ebf13-1058-405d-b6cf-eda03e5288d1
 
 # Data Factory (ADF)
 - name: DataFactoryName
