@@ -28,5 +28,3 @@ resource app 'Microsoft.Graph/applications@1.0' = {
   }
 }
 
-output appId string = app.properties.appId
-output appObjectId string = app.properties.appId
