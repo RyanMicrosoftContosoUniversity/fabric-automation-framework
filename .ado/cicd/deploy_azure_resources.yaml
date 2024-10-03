@@ -57,7 +57,7 @@ parameters:
   default: 'dev-app-test-rh-eus2'
 - name: AppRegistrationBicepTemplateFilePath
   type: string
-  default: "$(Build.Repository.LocalPath)/.ado/.bicep/appregistration.bicep"
+  default: "$(Build.Repository.LocalPath)/.ado/.bicep/app_registration.bicep"
 
 
 
