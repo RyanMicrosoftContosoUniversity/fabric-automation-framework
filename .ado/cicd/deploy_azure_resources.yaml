@@ -117,14 +117,13 @@ steps:
 
 
 - task: AzureCLI@2
-  displayName: "App Registration Via Bicep"
+  displayName: "App Registration Via CLI"
   inputs:
     azureSubscription: "${{ parameters.AzureResourceManagerConnection }}"
     scriptType: bash
-    scriptLocation: "inlineScript"
-    inlineScript: |
-      az deployment group create \
-        --name "MyAppRegistration$(Build.BuildNumber)" \
-        --resource-group "${{ parameters.DefaultResourceGroupName }}" \
-        --template-file "${{ parameters.AppRegistrationBicepTemplateFilePath }}" \
-        --parameters app_display_name="${{ parameters.app_display_name }}"
+    scriptLocation: "scriptPath"
+    scriptPath: "$(Build.Repository.LocalPath)/.ado/scripts/app_registration.sh"
+    app_display_name: ${{ parameters.app_display_name }}
+    subscriptionId: ${{ parameters.subscriptionId }}
+    keyVaultName: ${{ parameters.KeyVaultName }}
+    keyVaultURL: ${{ parameters.KeyVaultURL }}
