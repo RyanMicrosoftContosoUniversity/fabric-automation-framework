@@ -1,0 +1,20 @@
+# dev pipeline variables
+
+variables:
+- name: resourceGroupName
+  value: 'rg-ado-dev'
+
+- name: location
+  value: 'eastus2'
+
+- name: app_display_name
+  value: 'dev-app'
+
+- name: subscriptionId
+  value: '910ebf13-1058-405d-b6cf-eda03e5288d1'
+
+- name: keyVaultName
+  value: 'kv-ado-dev'
+
+- name: keyVaultURL
+  value: 'https://kv-ado-dev.vault.azure.net/'
