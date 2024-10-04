@@ -1,5 +1,5 @@
 {
-    "client_id": "15a84224-c1e2-45e0-a2f5-fc8f5206f81d",
+    "client_id": "b86b79cc-7f08-4c20-9ed6-0bdb91abb7b1",
     "tenant_id": "35acf02c-4b87-4ae6-9221-ff5cafd430b4",
     "authority": "https://login.microsoftonline.com/35acf02c-4b87-4ae6-9221-ff5cafd430b4",
     "scope": ["https://graph.microsoft.com/.default"],

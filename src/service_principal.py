@@ -1,6 +1,7 @@
 import msal
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
+import requests
 
 import json
 
@@ -16,6 +17,8 @@ class ServicePrincipal:
             self.client_id, authority=self.authority,
             client_credential=self.client_secret.value
         )
+        self.access_token = self.get_access_token(['https://analysis.windows.net/powerbi/api/.default'])
+
     def _get_spn_secret(self, secret_name, vault_url):
         credential = DefaultAzureCredential()
         client = SecretClient(vault_url=vault_url, credential=credential)
@@ -37,6 +40,14 @@ class ServicePrincipal:
     def get_access_token_by_refresh_token(self, scopes, refresh_token):
         result = self.app.acquire_token_by_refresh_token(refresh_token, scopes)
         return result['access_token']
+    
+    def get_modified_workspaces(self, modified_since=None, exclude_personal_workspaces=False, exclude_inactive_workspaces=False):
+        if modified_since==None and exclude_personal_workspaces==False and exclude_inactive_workspaces==False:
+            url = 'https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified'
+        else:
+            pass
+
+
 
 
 # base tests
