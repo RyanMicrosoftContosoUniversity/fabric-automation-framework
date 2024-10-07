@@ -19,10 +19,6 @@ class ServicePrincipal:
         )
         self.access_token = self.get_access_token(['https://analysis.windows.net/powerbi/api/.default'])
         
-        # initialize the workspaces list
-        # self.get_modified_workspaces()
-
-
 
     def _get_spn_secret(self, secret_name, vault_url):
         credential = DefaultAzureCredential()
@@ -46,79 +42,5 @@ class ServicePrincipal:
         result = self.app.acquire_token_by_refresh_token(refresh_token, scopes)
         return result['access_token']
     
-    # def get_modified_workspaces(self, modified_since=None, exclude_personal_workspaces=False, exclude_inactive_workspaces=False)->list:
-    #     """
-    #     modified_since: str: Last modified date and time in UTC. The format is 'YYYY-MM-DDTHH:MM:SSZ'.
-    #     exclude_personal_workspaces: bool: Exclude personal workspaces.
-    #     exclude_inactive_workspaces: bool: Exclude inactive workspaces.
-
-    #     return list: ModifiedWorkspace: List of workspaces that have been modified.
-    #     """
-    #     if modified_since==None and exclude_personal_workspaces==False and exclude_inactive_workspaces==False:
-    #         url = 'https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified'
-    #     else:
-    #         pass
-
-    #     response = requests.get(url, headers={'Authorization': f'Bearer {self.access_token}'})
-
-    #     # pass to create_workspace_json_list method to create a list of workspaces
-    #     self.workspaces_list = self.create_workspace_json_list(response.json())
-    #     return response.json()
-    
-    # def create_workspace_json_list(self, workspace_list:json)->json:
-    #     """
-    #     Creates a list of workspaces to be passed to the post_workspace_info method
-    #     """
-    #     workspace_json_list = {
-    #         "workspaces": []
-    #     }
-
-    #     for item in workspace_list:
-    #         value = item['id']
-    #         workspace_json_list['workspaces'].append(value)
-
-    #     self.workspace_json_list = workspace_json_list
-
-
-    # def post_workspace_info(self, workspace_list:list, dataset_expressions:bool=None, 
-    #                         dataset_schema:bool=None, datasource_details:bool=None,
-    #                         get_artifact_users:bool=None, lineage:bool=None):
-    #     """
-    #     Initiates a call to receive metadata for the requested list of workspaces
-    #     dataset_expressions: bool: Whether to return dataset expressions (DAX and Mashup queries)
-    #     dataset_schema: bool: Whether to return dataset schema(tables, columns, measures)
-    #     datasource_details: bool: Whether to return datasource details (connection string, credential details)
-    #     get_artifact_users: bool: Whether to return uer details for a Power BI item (report, dashboard)
-    #     lineage: bool: Whether to return lineage information for a dataset
-    #     """
-    #     if dataset_expressions==None and dataset_schema==None and datasource_details==None and get_artifact_users==None and lineage==None:
-    #         url = 'https://api.powerbi.com/v1.0/myorg/admin/workspaces/getInfo'
-    #     else:  
-    #         pass
-
-    #     response = requests.post(url, headers={'Authorization': f'Bearer {self.access_token}', 'Content-Type': 'application/json'}, json=workspace_list)
-
-    #     return response.json()
-    
-    # def get_scan_status(self, scan_id:str)->json:
-    #     """
-    #     Gets the scan status for the specified scan
-
-    #     return json: ScanStatus: The status of the scan
-    #     """
-    #     url = f'https://api.powerbi.com/v1.0/myorg/admin/workspaces/scanStatus/{scan_id}'
-
-    #     response = requests.get(url, headers={'Authorization': f'Bearer {self.access_token}'})
-
-    #     return response.json()
-
-    # def get_scan_result(self, scan_id:str)->json:
-    #     """
-    #     Gets the scan results for the specified scan
-    #     """
-    #     url = f'https://api.powerbi.com/v1.0/myorg/admin/workspaces/scanResult/{scan_id}'
-    #     response = requests.get(url, headers={'Authorization': f'Bearer {self.access_token}'})
-
-    #     return response.json()
 
     
