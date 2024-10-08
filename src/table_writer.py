@@ -11,7 +11,7 @@ class FileWriter:
         file_path_lookup = {
             "column": r"data\column.csv",
             "dashboard": r"data\dashboard.csv",
-            "dataset": r"rdata\dataset.csv",
+            "dataset": r"data\dataset.csv",
             "dataflow": r"data\dataflow.csv",
             "datamart": r"data\datamart.csv",
             "report": r"data\report.csv",
@@ -27,7 +27,8 @@ class FileWriter:
             "tablePermission": r"data\tablePermission.csv",
             "upstreamDataflow": r"data\upstreamDataflow.csv",
             "sensitivityLabel": r"data\sensitivityLabel.csv",
-            "source": r"data\source.csv"
+            "source": r"data\source.csv",
+            "tile": r"data\tile.csv"
         }
 
         # lookup file path for file type

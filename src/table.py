@@ -17,7 +17,17 @@ class EndorsementDetails:
         # validate foreignKeyObjectType
         if self.foreignKeyObjectType not in ['report', 'dataflow', 'datamart', 'dataset']:
             raise ValueError('foreignKeyObjectType must be one of the following: report, dataflow, datamart, dataset')
-        
+
+class Tile:
+    """
+    This class will be used to create the tile table
+    """
+    def __init__(self, id:str, title:str, report_id:str, dataset_id:str, fk_dashboard_id:str):
+        self.id = id
+        self.title = title
+        self.report_id = report_id
+        self.dataset_id = dataset_id
+        self.fk_dashboard_id = fk_dashboard_id   
 class Table:
     """
     This class will be used to create the table table
@@ -150,8 +160,8 @@ class SensitivityLabel:
         self.foreignKeyObjectType = foreignKeyObjectType
 
         # validate foreignKeyObjectType
-        if self.foreignKeyObjectType not in ['report', 'dataflow', 'datamart', 'dataset']:
-            raise ValueError('foreignKeyObjectType must be one of the following: report, dataflow, datamart, dataset')
+        if self.foreignKeyObjectType not in ['report', 'dataflow', 'datamart', 'dataset', 'dashboard']:
+            raise ValueError('foreignKeyObjectType must be one of the following: report, dataflow, datamart, dataset, dashboard')
 
 class User:
     """
@@ -172,8 +182,8 @@ class User:
         self.profile = profile
 
         # validate foreignKeyObjectType
-        if self.foreignKeyObjectType not in ['workspace', 'report', 'dataflow', 'dataset']:
-            raise ValueError('foreignKeyObjectType must be one of the following: workspace, report, dataflow, dataset')
+        if self.foreignKeyObjectType not in ['workspace', 'report', 'dataflow', 'dataset', 'dashboard']:
+            raise ValueError('foreignKeyObjectType must be one of the following: workspace, report, dataflow, dataset, dashboard')
 
 
 class Workspace_table:
@@ -228,7 +238,7 @@ class Workspace_table:
 
         # process datasets
         for dataset in self.datasets:
-            dataset_table = Dataset_table(id=dataset['id'], workspaceId=self.id, tables=dataset['tables'], relationships=dataset['relationships'],
+            dataset_table = Dataset_table(id=dataset['id'], name=dataset['name'], workspaceId=self.id, tables=dataset['tables'], relationships=dataset['relationships'],
                                           configuredBy=dataset['configuredBy'], endorsementDetails=dataset['endorsementDetails'], expressions=dataset['expressions'],
                                           roles=dataset['roles'], uptreamDataflows=dataset['upstreamDataflows'], datasourceUsages=dataset['datasourceUsages'],
                                           sensitivityLabel=dataset['sensitivityLabel'], users=dataset['users'])
@@ -239,6 +249,14 @@ class Workspace_table:
                                                             appUserAccessRight=user['appUserAccessRight'], identifier=user['identifier'], graphId=user['graphId'],
                                                             principalType=user['principalType'])
 
+
+        # write workspace to file
+        workspace_line = f'{self.id},{self.name},{self.type},{self.isOnDedicatedCapacity},{self.capacityId},{self.defaultDatasetStorageFormat}\n'
+        workspace_file_writer = FileWriter(file_type='workspace')
+        if workspace_file_writer.line_exists(workspace_line):
+            pass
+        else:
+            workspace_file_writer.append_line_to_file(workspace_line)
 
 class Report_table:
     """
@@ -292,6 +310,72 @@ class Dashboard_table:
         self.sensitivityLabel = sensitivityLabel
         self.users = users
 
+        # process tiles
+        for tile in self.tiles:
+            my_tile = Tile(id=tile['id'], title=tile['title'], report_id=tile['reportId'], dataset_id=tile['datasetId'], fk_dashboard_id=self.id)
+
+            # write to file
+            my_tile_line = f'{my_tile.id},{my_tile.title},{my_tile.report_id},{my_tile.dataset_id},{my_tile.fk_dashboard_id}\n'
+            tile_file_writer = FileWriter(file_type='tile')
+            if tile_file_writer.line_exists(my_tile_line):
+                pass
+            else:
+                tile_file_writer.append_line_to_file(my_tile_line)
+
+        # process sensitivityLabel
+        my_sensitivityLabel = SensitivityLabel(labelId=sensitivityLabel['labelId'],
+                                            fk_object_id=self.id,
+                                            foreignKeyObjectType='dashboard')
+        
+        # write to file
+        my_sensitivityLabel_line = f'{my_sensitivityLabel.labelId},{my_sensitivityLabel.fk_object_id},{my_sensitivityLabel.foreignKeyObjectType}\n'
+        sensitivityLabel_file_writer = FileWriter(file_type='sensitivityLabel')
+        if sensitivityLabel_file_writer.line_exists(my_sensitivityLabel_line):
+            pass
+        else:
+            sensitivityLabel_file_writer.append_line_to_file(my_sensitivityLabel_line)
+
+        # process users
+        for user in self.users:
+            try:
+                user_type = user['userType']
+            except:
+                user_type = 'None'
+            try:
+                profile = user['profile']
+            except:
+                profile = 'None'
+            my_user = User(displayName=user['displayName'],
+                           fk_object_id=self.id,
+                           foreignKeyObjectType='dashboard',
+                           emailAddress=user['emailAddress'],
+                           appUserAccessRight=user['appUserAccessRight'],
+                           identifier=user['identifier'],
+                           graphId=user['graphId'],
+                           principalType=user['principalType'],
+                           userType=user_type,
+                           profile=profile
+                           )
+            
+            # write to file
+            my_user_line = f'{my_user.displayName},{my_user.fk_object_id},{my_user.foreignKeyObjectType},{my_user.emailAddress},{my_user.appUserAccessRight},{my_user.identifier},{my_user.graphId},{my_user.principalType},{my_user.userType},{my_user.profile}\n'
+            user_file_writer = FileWriter(file_type='user')
+            if user_file_writer.line_exists(my_user_line):
+                pass
+            else:
+                user_file_writer.append_line_to_file(my_user_line)
+
+        # write dashboard to file
+        dashboard_line = f'{self.id},{self.workspaceId},{self.isReadOnly}\n'
+        dashboard_file_writer = FileWriter(file_type='dashboard')
+        if dashboard_file_writer.line_exists(dashboard_line):
+            pass
+        else:
+            dashboard_file_writer.append_line_to_file(dashboard_line)
+        
+            
+
+
 
 class Workspace_users_table:
     """
@@ -323,10 +407,11 @@ class Dataset_table:
     """
     This class will be used to create the dataset table
     """
-    def __init__(self, id:str, workspaceId:str, tables:list, relationships:list,
+    def __init__(self, id:str, name:str, workspaceId:str, tables:list, relationships:list,
                  configuredBy:str, endorsementDetails:dict, expressions:list, roles:list,
                  uptreamDataflows:list, datasourceUsages:list, sensitivityLabel:dict, users:list):
         self.id = id
+        self.name = name
         self.workspaceId = workspaceId
         self.tables = tables
         self.relationships = relationships
@@ -477,6 +562,14 @@ class Dataset_table:
             else:
                 user_file_writer.append_line_to_file(my_user_line)
 
+        # write dataset to file
+        dataset_line = f'{self.id},{self.name}, {self.workspaceId}\n'
+        dataset_file_writer = FileWriter(file_type='dataset')
+        if dataset_file_writer.line_exists(dataset_line):
+            pass
+        else:
+            dataset_file_writer.append_line_to_file(dataset_line)
+
 
 
 
@@ -549,4 +642,6 @@ class TablePermission:
         self.fk_dataset_id = fk_dataset_id
         self.name = name
         self.filterExpression = filterExpression
+
+
 
