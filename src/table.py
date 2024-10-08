@@ -3,6 +3,105 @@ This module will be used for table objects within the metadata database
 This will take results from the scan and create tables in the metadata database
 """
 
+class EndorsementDetails:
+    """
+    This class will be used to create the endorsementDetails table
+    """
+    def __init__(self, fk_object_id:str, foreignKeyObjectType:str, endorsement:str, certifiedBy:str):
+        fk_object_id = fk_object_id
+        self.foreignKeyObjectType = foreignKeyObjectType
+        self.endorsement = endorsement
+        self.certifiedBy = certifiedBy
+
+        # validate foreignKeyObjectType
+        if self.foreignKeyObjectType not in ['report', 'dataflow', 'datamart', 'dataset']:
+            raise ValueError('foreignKeyObjectType must be one of the following: report, dataflow, datamart, dataset')
+        
+class Table:
+    """
+    This class will be used to create the table table
+    """
+    def __init__(self, name:str, fk_dataset_id:str):
+        self.name = name
+        self.fk_dataset_id = fk_dataset_id
+
+class Expression:
+    """
+    This class will be used to create the expression table
+    """
+    def __init__(self, name:str, fk_dataset_id:str, description:str, expression:str):
+        self.name = name
+        self.fk_dataset_id = fk_dataset_id
+        self.description = description
+        self.expression = expression
+
+class UpstreamDataflow:
+    """
+    This class will be used to create the upstream_dataflow table
+    """
+    def __init__(self, targetDataflowId:str, groupId:str, fk_object_id:str, foreignKeyObjectType:str):
+        self.targetDataflowId = targetDataflowId
+        self.groupId = groupId
+        self.fk_object_id = fk_object_id
+        self.foreignKeyObjectType = foreignKeyObjectType
+
+        # validate foreignKeyObjectType
+        if self.foreignKeyObjectType not in ['dataflow', 'dataset']:
+            raise ValueError('foreignKeyObjectType must be one of the following: dataflow, dataset')
+        
+class Role:
+    """
+    This class will be used to create the role table
+    """
+    def __init__(self, name:str, modelPermission:str, fk_dataset_id:str):
+        self.name = name
+        self.modelPermission = modelPermission
+        self.fk_dataset_id = fk_dataset_id
+
+class DatasourceUsage:
+    """
+    This class will be used to create the datasource_usage table
+    """
+    def __init__(self, datasourceInstanceId:str, fk_object_id:str, foreignKeyObjectType:str):
+        self.datasourceInstanceId = datasourceInstanceId
+        self.fk_object_id = fk_object_id
+        self.foreignKeyObjectType = foreignKeyObjectType
+
+        # validate foreignKeyObjectType
+        if self.foreignKeyObjectType not in ['dataflow', 'dataset']:
+            raise ValueError('foreignKeyObjectType must be one of the following: dataflow, dataset')
+
+class SensitivityLabel:
+    """
+    This class will be used to create the sensitivityLabel table
+    """
+    def __init__(self, labelId:str, fk_object_id:str, foreignKeyObjectType:str):
+        self.labelId = labelId
+        fk_object_id = fk_object_id
+        self.foreignKeyObjectType = foreignKeyObjectType
+
+        # validate foreignKeyObjectType
+        if self.foreignKeyObjectType not in ['report', 'dataflow', 'datamart', 'dataset']:
+            raise ValueError('foreignKeyObjectType must be one of the following: report, dataflow, datamart, dataset')
+
+class User:
+    """
+    This class will be used to create the user table
+    """
+    def __init__(self, displayName:str, fk_object_id:str, foreignKeyObjectType:str, emailAddress:str, appUserAccessRight:str, identifier:str, graphId:str, principalType:str, userType:str, profile:dict):
+        self.displayName = displayName
+        self.fk_object_id = fk_object_id
+        self.foreignKeyObjectType = foreignKeyObjectType
+        self.emailAddress = emailAddress
+        self.appUserAccessRight = appUserAccessRight
+        self.identifier = identifier
+        self.graphId = graphId
+        self.principalType = principalType
+
+        # validate foreignKeyObjectType
+        if self.foreignKeyObjectType not in ['workspace', 'report', 'dataflow', 'dataset']:
+            raise ValueError('foreignKeyObjectType must be one of the following: workspace, report, dataflow, dataset')
+
 
 class Workspace_table:
     """
@@ -167,34 +266,67 @@ class Dataset_table:
         self.sensitivityLabel = sensitivityLabel
         self.users = users
 
-class EndorsementDetails:
-    """
-    This class will be used to create the endorsementDetails table
-    """
-    def __init__(self, id:str, fk_object_id:str, foreignKeyObjectType:str, endorsement:str, certifiedBy:str):
-        self.id = id
-        fk_object_id = fk_object_id
-        self.foreignKeyObjectType = foreignKeyObjectType
-        self.endorsement = endorsement
-        self.certifiedBy = certifiedBy
+        # process tables
+        for table in self.tables:
+            my_table = Table(name=table['name'], fk_dataset_id=self.id)
 
-        # validate foreignKeyObjectType
-        if self.foreignKeyObjectType not in ['report', 'dataflow', 'datamart', 'dataset']:
-            raise ValueError('foreignKeyObjectType must be one of the following: report, dataflow, datamart, dataset')
-        
+        # process relationships
+        for relationship in self.relationships:
+            pass
 
-class SensitivityLabel:
-    """
-    This class will be used to create the sensitivityLabel table
-    """
-    def __init__(self, labelId:str, fk_object_id:str, foreignKeyObjectType:str):
-        self.labelId = labelId
-        fk_object_id = fk_object_id
-        self.foreignKeyObjectType = foreignKeyObjectType
+        # process endorsementDetails
+        for endorsementDetail in self.endorsementDetails:
+            for endorsement in endorsementDetail:
+                my_endorsement = EndorsementDetails(fk_object_id=self.id, 
+                                                       foreignKeyObjectType='dataset',
+                                                       endorsement=endorsement['endorsement'], 
+                                                       certifiedBy=endorsement['certifiedBy'])
 
-        # validate foreignKeyObjectType
-        if self.foreignKeyObjectType not in ['report', 'dataflow', 'datamart', 'dataset']:
-            raise ValueError('foreignKeyObjectType must be one of the following: report, dataflow, datamart, dataset')
+        # process expressions
+        for expression in self.expressions:
+            my_expression = Expression(name=expression['name'], 
+                                          fk_dataset_id=self.id, 
+                                          description=expression['description'], 
+                                          expression=expression['expression'])
+
+        # process roles
+        for role in self.roles:
+            my_role = Role(name=role['name'], 
+                           modelPermission=role['modelPermission'], 
+                           fk_dataset_id=self.id)
+
+        # process uptreamDataflows
+        for uptreamDataflow in self.uptreamDataflows:
+            my_upstreamDataflow = UpstreamDataflow(targetDataflowId=uptreamDataflow['targetDataflowId'],
+                                                    groupId=uptreamDataflow['groupId'],
+                                                    fk_object_id=self.id,
+                                                    foreignKeyObjectType='dataset')
+
+        # process datasourceUsages
+        for datasourceUsage in self.datasourceUsages:
+            my_datasourceUsage = DatasourceUsage(datasourceInstanceId=datasourceUsage['datasourceInstanceId'],
+                                                fk_object_id=self.id,
+                                                foreignKeyObjectType='dataset')
+
+        # process sensitivityLabel
+        for sensitivityLabel in self.sensitivityLabel:
+            my_sensitivityLabel = SensitivityLabel(labelId=sensitivityLabel['labelId'],
+                                                  fk_object_id=self.id,
+                                                  foreignKeyObjectType='dataset')
+
+        # process users
+        for user in self.users:
+            my_user = User(displayName=user['displayName'],
+                           fk_object_id=self.id,
+                           foreignKeyObjectType='dataset',
+                           emailAddress=user['emailAddress'],
+                           appUserAccessRight=user['appUserAccessRight'],
+                           identifier=user['identifier'],
+                           graphId=user['graphId'],
+                           principalType=user['principalType'],
+                           userType=user['userType'],
+                           profile=user['profile'])
+
 
 
 class Datamart_user:
@@ -212,43 +344,6 @@ class Datamart_user:
         self.userType = userType
         self.profile = profile
         self.datamartUserAccessRight = datamartUserAccessRight
-
-
-class User:
-    """
-    This class will be used to create the user table
-    """
-    def __init__(self, displayName:str, fk_object_id:str, foreignKeyObjectType:str, emailAddress:str, appUserAccessRight:str, identifier:str, graphId:str, principalType:str, userType:str, profile:dict):
-        self.displayName = displayName
-        self.fk_object_id = fk_object_id
-        self.foreignKeyObjectType = foreignKeyObjectType
-        self.emailAddress = emailAddress
-        self.appUserAccessRight = appUserAccessRight
-        self.identifier = identifier
-        self.graphId = graphId
-        self.principalType = principalType
-
-        # validate foreignKeyObjectType
-        if self.foreignKeyObjectType not in ['workspace', 'report', 'dataflow', 'dataset']:
-            raise ValueError('foreignKeyObjectType must be one of the following: workspace, report, dataflow, dataset')
-
-class Expression:
-    """
-    This class will be used to create the expression table
-    """
-    def __init__(self, name:str, fk_dataset_id:str, description:str, expression:str):
-        self.name = name
-        self.fk_dataset_id = fk_dataset_id
-        self.description = description
-        self.expression = expression
-
-class Table:
-    """
-    This class will be used to create the table table
-    """
-    def __init__(self, name:str, fk_dataset_id:str):
-        self.name = name
-        self.fk_dataset_id = fk_dataset_id
 
 
 class Column:
@@ -281,14 +376,6 @@ class Source:
         self.fk_dataset_id = fk_dataset_id
         self.table_name = table_name
 
-class Role:
-    """
-    This class will be used to create the role table
-    """
-    def __init__(self, name:str, modelPermission:str, fk_dataset_id:str):
-        self.name = name
-        self.modelPermission = modelPermission
-        self.fk_dataset_id = fk_dataset_id
 
 class Member:
     """
@@ -312,30 +399,3 @@ class TablePermission:
         self.name = name
         self.filterExpression = filterExpression
 
-
-class UpstreamDataflow:
-    """
-    This class will be used to create the upstream_dataflow table
-    """
-    def __init__(self, targetDataflowId:str, groupId:str, fk_object_id:str, foreignKeyObjectType:str):
-        self.targetDataflowId = targetDataflowId
-        self.groupId = groupId
-        self.fk_object_id = fk_object_id
-        self.foreignKeyObjectType = foreignKeyObjectType
-
-        # validate foreignKeyObjectType
-        if self.foreignKeyObjectType not in ['dataflow', 'dataset']:
-            raise ValueError('foreignKeyObjectType must be one of the following: dataflow, dataset')
-        
-class DatasourceUsage:
-    """
-    This class will be used to create the datasource_usage table
-    """
-    def __init__(self, datasourceInstanceId:str, fk_object_id:str, foreignKeyObjectType:str):
-        self.datasourceInstanceId = datasourceInstanceId
-        self.fk_object_id = fk_object_id
-        self.foreignKeyObjectType = foreignKeyObjectType
-
-        # validate foreignKeyObjectType
-        if self.foreignKeyObjectType not in ['dataflow', 'dataset']:
-            raise ValueError('foreignKeyObjectType must be one of the following: dataflow, dataset')
