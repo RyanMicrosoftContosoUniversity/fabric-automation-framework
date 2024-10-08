@@ -25,6 +25,8 @@ class Table:
         self.name = name
         self.fk_dataset_id = fk_dataset_id
 
+
+
 class Expression:
     """
     This class will be used to create the expression table
@@ -275,12 +277,10 @@ class Dataset_table:
             pass
 
         # process endorsementDetails
-        for endorsementDetail in self.endorsementDetails:
-            for endorsement in endorsementDetail:
-                my_endorsement = EndorsementDetails(fk_object_id=self.id, 
-                                                       foreignKeyObjectType='dataset',
-                                                       endorsement=endorsement['endorsement'], 
-                                                       certifiedBy=endorsement['certifiedBy'])
+        my_endorsement = EndorsementDetails(fk_object_id=self.id,
+                                            foreignKeyObjectType='dataset',
+                                            endorsement=self.endorsementDetails['endorsement'],
+                                            certifiedBy=self.endorsementDetails['certifiedBy'])
 
         # process expressions
         for expression in self.expressions:
