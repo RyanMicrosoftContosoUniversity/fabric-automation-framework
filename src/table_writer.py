@@ -25,7 +25,9 @@ class FileWriter:
             "role": r"data\role.csv",
             "table": r"data\table.csv",
             "tablePermission": r"data\tablePermission.csv",
-            "upstreamDataflow": r"data\upstreamDataflow.csv"
+            "upstreamDataflow": r"data\upstreamDataflow.csv",
+            "sensitivityLabel": r"data\sensitivityLabel.csv",
+            "source": r"data\source.csv"
         }
 
         # lookup file path for file type

@@ -2,13 +2,14 @@
 This module will be used for table objects within the metadata database
 This will take results from the scan and create tables in the metadata database
 """
+from src.table_writer import TableWriter, FileWriter
 
 class EndorsementDetails:
     """
     This class will be used to create the endorsementDetails table
     """
     def __init__(self, fk_object_id:str, foreignKeyObjectType:str, endorsement:str, certifiedBy:str):
-        fk_object_id = fk_object_id
+        self.fk_object_id = fk_object_id
         self.foreignKeyObjectType = foreignKeyObjectType
         self.endorsement = endorsement
         self.certifiedBy = certifiedBy
@@ -21,9 +22,49 @@ class Table:
     """
     This class will be used to create the table table
     """
-    def __init__(self, name:str, fk_dataset_id:str):
+    def __init__(self, name:str, fk_dataset_id:str, column:list=[], measure:list=[], source:list=[]):
         self.name = name
         self.fk_dataset_id = fk_dataset_id
+        self.column = column
+        self.measure = measure
+        self.source = source
+
+        # process column
+        for column in self.column:
+            my_column = Column(name=column['name'], dataType=column['dataType'], isHidden=column['isHidden'], fk_dataset_id=self.fk_dataset_id, table_name=self.name)
+
+            # write to file
+            my_column_line = f'{my_column.name},{my_column.dataType},{my_column.isHidden},{my_column.fk_dataset_id},{my_column.table_name}\n'
+            column_file_writer = FileWriter(file_type='column')
+            if column_file_writer.line_exists(my_column_line):
+                pass
+            else:
+                column_file_writer.append_line_to_file(my_column_line)
+
+        # process measure
+        for measure in self.measure:
+            my_measure = Measure(name=measure['name'], expression=measure['expression'], fk_dataset_id=self.fk_dataset_id, table_name=self.name)
+
+            # write to file
+            my_measure_line = f'{my_measure.name},{my_measure.expression},{my_measure.fk_dataset_id},{my_measure.table_name}\n'
+            measure_file_writer = FileWriter(file_type='measure')
+            if measure_file_writer.line_exists(my_measure_line):
+                pass
+            else:
+                measure_file_writer.append_line_to_file(my_measure_line)
+
+        # process source
+        for source in self.source:
+            my_source = Source(expression=source['expression'], fk_dataset_id=self.fk_dataset_id, table_name=self.name)
+
+            # write to file
+            my_source_line = f'{my_source.expression},{my_source.fk_dataset_id},{my_source.table_name}\n'
+            source_file_writer = FileWriter(file_type='source')
+            if source_file_writer.line_exists(my_source_line):
+                pass
+            else:
+                source_file_writer.append_line_to_file(my_source_line)
+
 
 
 
@@ -55,10 +96,36 @@ class Role:
     """
     This class will be used to create the role table
     """
-    def __init__(self, name:str, modelPermission:str, fk_dataset_id:str):
+    def __init__(self, name:str, modelPermission:str, fk_dataset_id:str, member:list=[], tablePermission:list=[]):
         self.name = name
         self.modelPermission = modelPermission
         self.fk_dataset_id = fk_dataset_id
+        self.member = member
+        self.tablePermission = tablePermission
+
+        # process member
+        for member in self.member:
+            my_member = Member(role_name=self.name, fk_dataset_id=self.fk_dataset_id, memberName=member['memberName'], memberId=member['memberId'], memberType=member['memberType'], identityProvider=member['identityProvider'])
+
+            # write to file
+            my_member_line = f'{my_member.role_name},{my_member.fk_dataset_id},{my_member.memberName},{my_member.memberId},{my_member.memberType},{my_member.identityProvider}\n'
+            member_file_writer = FileWriter(file_type='member')
+            if member_file_writer.line_exists(my_member_line):
+                pass
+            else:
+                member_file_writer.append_line_to_file(my_member_line)
+
+        # process tablePermission
+        for tablePermission in self.tablePermission:
+            my_tablePermission = TablePermission(role_name=self.name, fk_dataset_id=self.fk_dataset_id, name=tablePermission['name'], filterExpression=tablePermission['filterExpression'])
+
+            # write to file
+            my_tablePermission_line = f'{my_tablePermission.role_name},{my_tablePermission.fk_dataset_id},{my_tablePermission.name},{my_tablePermission.filterExpression}\n'
+            tablePermission_file_writer = FileWriter(file_type='tablePermission')
+            if tablePermission_file_writer.line_exists(my_tablePermission_line):
+                pass
+            else:
+                tablePermission_file_writer.append_line_to_file(my_tablePermission_line)
 
 class DatasourceUsage:
     """
@@ -79,7 +146,7 @@ class SensitivityLabel:
     """
     def __init__(self, labelId:str, fk_object_id:str, foreignKeyObjectType:str):
         self.labelId = labelId
-        fk_object_id = fk_object_id
+        self.fk_object_id = fk_object_id
         self.foreignKeyObjectType = foreignKeyObjectType
 
         # validate foreignKeyObjectType
@@ -90,7 +157,9 @@ class User:
     """
     This class will be used to create the user table
     """
-    def __init__(self, displayName:str, fk_object_id:str, foreignKeyObjectType:str, emailAddress:str, appUserAccessRight:str, identifier:str, graphId:str, principalType:str, userType:str, profile:dict):
+    def __init__(self, displayName:str, fk_object_id:str, foreignKeyObjectType:str, 
+                 emailAddress:str, appUserAccessRight:str, identifier:str, 
+                 graphId:str, principalType:str, userType:str, profile:dict):
         self.displayName = displayName
         self.fk_object_id = fk_object_id
         self.foreignKeyObjectType = foreignKeyObjectType
@@ -99,6 +168,8 @@ class User:
         self.identifier = identifier
         self.graphId = graphId
         self.principalType = principalType
+        self.userType = userType
+        self.profile = profile
 
         # validate foreignKeyObjectType
         if self.foreignKeyObjectType not in ['workspace', 'report', 'dataflow', 'dataset']:
@@ -131,7 +202,7 @@ class Workspace_table:
                                         datasetId=report['datasetId'], createdDateTime=report['createdDateTime'],
                                         modifiedDateTime=report['modifiedDateTime'], modifiedBy=report['modifiedBy'],
                                         endorsementDetails=report['endorsementDetails'], sensitivityLabel=report['sensitivityLabel'],
-                                        users=report['users'])
+                                        users=report['users'], )
 
         # process dashboards
         for dashboard in self.dashboards:
@@ -270,7 +341,16 @@ class Dataset_table:
 
         # process tables
         for table in self.tables:
-            my_table = Table(name=table['name'], fk_dataset_id=self.id)
+            my_table = Table(name=table['name'], fk_dataset_id=self.id, column=table['columns'], 
+                             measure=table['measures'], source=table['source'])
+
+            # write to file
+            my_table_line = f'{my_table.name},{my_table.fk_dataset_id}\n'
+            table__file_writer = FileWriter(file_type='table')
+            if table__file_writer.line_exists(my_table_line):
+                pass
+            else:
+                table__file_writer.append_line_to_file(my_table_line)
 
         # process relationships
         for relationship in self.relationships:
@@ -281,6 +361,14 @@ class Dataset_table:
                                             foreignKeyObjectType='dataset',
                                             endorsement=self.endorsementDetails['endorsement'],
                                             certifiedBy=self.endorsementDetails['certifiedBy'])
+        # write to file
+        my_endorsement_line = f'{my_endorsement.fk_object_id},{my_endorsement.foreignKeyObjectType},{my_endorsement.endorsement},{my_endorsement.certifiedBy}\n'
+
+        endorsement_file_writer = FileWriter(file_type='endorsementDetail')
+        if endorsement_file_writer.line_exists(my_endorsement_line):
+            pass
+        else:
+            endorsement_file_writer.append_line_to_file(my_endorsement_line)
 
         # process expressions
         for expression in self.expressions:
@@ -288,12 +376,30 @@ class Dataset_table:
                                           fk_dataset_id=self.id, 
                                           description=expression['description'], 
                                           expression=expression['expression'])
+            
+            # write to file
+            my_expression_line = f'{my_expression.name},{my_expression.fk_dataset_id},{my_expression.description},{my_expression.expression}\n'
+            expression_file_writer = FileWriter(file_type='expression')
+            if expression_file_writer.line_exists(my_expression_line):
+                pass
+            else:
+                expression_file_writer.append_line_to_file(my_expression_line)
 
         # process roles
         for role in self.roles:
             my_role = Role(name=role['name'], 
                            modelPermission=role['modelPermission'], 
-                           fk_dataset_id=self.id)
+                           fk_dataset_id=self.id,
+                           member=role['members'],
+                           tablePermission=role['tablePermissions'])
+            
+            # write to file
+            my_role_line = f'{my_role.name},{my_role.modelPermission},{my_role.fk_dataset_id}\n'
+            role_file_writer = FileWriter(file_type='role')
+            if role_file_writer.line_exists(my_role_line):
+                pass
+            else:
+                role_file_writer.append_line_to_file(my_role_line)
 
         # process uptreamDataflows
         for uptreamDataflow in self.uptreamDataflows:
@@ -301,21 +407,56 @@ class Dataset_table:
                                                     groupId=uptreamDataflow['groupId'],
                                                     fk_object_id=self.id,
                                                     foreignKeyObjectType='dataset')
+            
+            # write to file
+            my_upstreamDataflow_line = f'{my_upstreamDataflow.targetDataflowId},{my_upstreamDataflow.groupId},{my_upstreamDataflow.fk_object_id},{my_upstreamDataflow.foreignKeyObjectType}\n'
+            upstreamDataflow_file_writer = FileWriter(file_type='upstreamDataflow')
+            if upstreamDataflow_file_writer.line_exists(my_upstreamDataflow_line):
+                pass
+            else:
+                upstreamDataflow_file_writer.append_line_to_file(my_upstreamDataflow_line)
+
 
         # process datasourceUsages
         for datasourceUsage in self.datasourceUsages:
             my_datasourceUsage = DatasourceUsage(datasourceInstanceId=datasourceUsage['datasourceInstanceId'],
                                                 fk_object_id=self.id,
                                                 foreignKeyObjectType='dataset')
+            
+            # write to file
+            my_datasourceUsage_line = f'{my_datasourceUsage.datasourceInstanceId},{my_datasourceUsage.fk_object_id},{my_datasourceUsage.foreignKeyObjectType}\n'
+            datasourceUsage_file_writer = FileWriter(file_type='datasourceUsage')
+            if datasourceUsage_file_writer.line_exists(my_datasourceUsage_line):
+                pass
+            else:
+                datasourceUsage_file_writer.append_line_to_file(my_datasourceUsage_line)
+
 
         # process sensitivityLabel
-        for sensitivityLabel in self.sensitivityLabel:
-            my_sensitivityLabel = SensitivityLabel(labelId=sensitivityLabel['labelId'],
-                                                  fk_object_id=self.id,
-                                                  foreignKeyObjectType='dataset')
+        
+        my_sensitivityLabel = SensitivityLabel(labelId=sensitivityLabel['labelId'],
+                                                fk_object_id=self.id,
+                                                foreignKeyObjectType='dataset')
+            
+        # write to file
+        my_sensitivityLabel_line = f'{my_sensitivityLabel.labelId},{my_sensitivityLabel.fk_object_id},{my_sensitivityLabel.foreignKeyObjectType}\n'
+        sensitivityLabel_file_writer = FileWriter(file_type='sensitivityLabel')
+        if sensitivityLabel_file_writer.line_exists(my_sensitivityLabel_line):
+            pass
+        else:
+            sensitivityLabel_file_writer.append_line_to_file(my_sensitivityLabel_line)
+
 
         # process users
         for user in self.users:
+            try:
+                user_type = user['userType']
+            except:
+                user_type = 'None'
+            try:
+                profile = user['profile']
+            except:
+                profile = 'None'
             my_user = User(displayName=user['displayName'],
                            fk_object_id=self.id,
                            foreignKeyObjectType='dataset',
@@ -324,8 +465,18 @@ class Dataset_table:
                            identifier=user['identifier'],
                            graphId=user['graphId'],
                            principalType=user['principalType'],
-                           userType=user['userType'],
-                           profile=user['profile'])
+                           userType=user_type,
+                           profile=profile
+                           )
+            
+            # write to file
+            my_user_line = f'{my_user.displayName},{my_user.fk_object_id},{my_user.foreignKeyObjectType},{my_user.emailAddress},{my_user.appUserAccessRight},{my_user.identifier},{my_user.graphId},{my_user.principalType},{my_user.userType},{my_user.profile}\n'
+            user_file_writer = FileWriter(file_type='user')
+            if user_file_writer.line_exists(my_user_line):
+                pass
+            else:
+                user_file_writer.append_line_to_file(my_user_line)
+
 
 
 
