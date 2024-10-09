@@ -190,8 +190,9 @@ class Workspace_table:
     """
     This class will be used to create the workspace table
     """
-    def __init__(self, id:str, name:str, type:str, isOnDedicatedCapacity:bool, capacityId:str, 
-                 defaultDatasetStorageFormat:str, reports:list=None, dashboards:list=None, dataflows:list=None,
+    def __init__(self, id:str, name:str, type:str, isOnDedicatedCapacity:bool,  
+                 defaultDatasetStorageFormat:str=None, capacityId:str=None, reports:list=None,
+                   dashboards:list=None, dataflows:list=None,
                  datamarts:list=None, datasets:list=None, users:list=None):
         self.id = id
         self.name = name
@@ -208,11 +209,23 @@ class Workspace_table:
 
         # process reports
         for report in self.reports:
+            try:
+                endorsementDetails = report['endorsementDetails']
+            except:
+                endorsementDetails = {}
+            try:
+                sensitivityLabel = report['sensitivityLabel']
+            except:
+                sensitivityLabel = {}
+            try:
+                users = report['users']
+            except:
+                users = []
             report_table = Report_table(id=report['id'], workspaceId=self.id, name=report['name'],
                                         datasetId=report['datasetId'], createdDateTime=report['createdDateTime'],
                                         modifiedDateTime=report['modifiedDateTime'], modifiedBy=report['modifiedBy'],
-                                        endorsementDetails=report['endorsementDetails'], sensitivityLabel=report['sensitivityLabel'],
-                                        users=report['users'], )
+                                        endorsementDetails=endorsementDetails, sensitivityLabel=sensitivityLabel,
+                                        users=users, )
 
         # process dashboards
         for dashboard in self.dashboards:
@@ -222,11 +235,35 @@ class Workspace_table:
 
         # process dataflows
         for dataflow in self.dataflows:
+            try:
+                description = dataflow['description']
+            except:
+                description = None
+            try:
+                endorsementDetails = dataflow['endorsementDetails']
+            except:
+                endorsementDetails = {}
+            try:
+                datasourceUsages = dataflow['datasourceUsages']
+            except:
+                datasourceUsages = []
+            try:
+                misconfiguredDatasourceUsages = dataflow['misconfiguredDatasourceUsages']
+            except:
+                misconfiguredDatasourceUsages = []
+            try:
+                sensitivityLabel = dataflow['sensitivityLabel']
+            except:
+                sensitivityLabel = {}
+            try:
+                users = dataflow['users']
+            except:
+                users = []  
             dataflow_table = Dataflow_table(objectId=dataflow['objectId'], workspaceId=self.id, name=dataflow['name'],
-                                            description=dataflow['description'], configuredBy=dataflow['configuredBy'], modifiedBy=dataflow['modifiedBy'],
-                                            modifiedDateTime=dataflow['modifiedDateTime'], endorsementDetails=dataflow['endorsementDetails'],
-                                            datasourceUsages=dataflow['datasourceUsages'], misconfiguredDatasourceUsages=dataflow['misconfiguredDatasourceUsages'],
-                                            sensitivityLabel=dataflow['sensitivityLabel'], users=dataflow['users'])    
+                                            description=description, configuredBy=dataflow['configuredBy'], modifiedBy=dataflow['modifiedBy'],
+                                            modifiedDateTime=dataflow['modifiedDateTime'], endorsementDetails=endorsementDetails,
+                                            datasourceUsages=datasourceUsages, misconfiguredDatasourceUsages=misconfiguredDatasourceUsages,
+                                            sensitivityLabel=sensitivityLabel, users=users)    
 
         # process datamarts
         for datamart in self.datamarts:
@@ -238,10 +275,43 @@ class Workspace_table:
 
         # process datasets
         for dataset in self.datasets:
-            dataset_table = Dataset_table(id=dataset['id'], name=dataset['name'], workspaceId=self.id, tables=dataset['tables'], relationships=dataset['relationships'],
-                                          configuredBy=dataset['configuredBy'], endorsementDetails=dataset['endorsementDetails'], expressions=dataset['expressions'],
-                                          roles=dataset['roles'], uptreamDataflows=dataset['upstreamDataflows'], datasourceUsages=dataset['datasourceUsages'],
-                                          sensitivityLabel=dataset['sensitivityLabel'], users=dataset['users'])
+            try:
+                relationships = dataset['relationships']
+            except:
+                relationships = []
+            try:
+                endorsementDetails = dataset['endorsementDetails']
+            except:
+                endorsementDetails = {}
+            try:
+                expressions = dataset['expressions']
+            except:
+                expressions = []
+            try:
+                roles = dataset['roles']
+            except:
+                roles = []
+            try:
+                upstreamDataflows = dataset['upstreamDataflows']
+            except:
+                upstreamDataflows = []
+            try:
+                DatasourceUsages = dataset['datasourceUsages']
+            except:
+                DatasourceUsages = []
+            try:
+                SensitivityLabel = dataset['sensitivityLabel']
+            except:
+                SensitivityLabel = []
+            try:
+                users = dataset['users']
+            except:
+                users = []
+            dataset_table = Dataset_table(id=dataset['id'], name=dataset['name'], workspaceId=self.id, tables=dataset['tables'], relationships=relationships,
+                                          configuredBy=dataset['configuredBy'], endorsementDetails=endorsementDetails, expressions=expressions,
+                                          roles=roles, uptreamDataflows=upstreamDataflows, datasourceUsages=DatasourceUsages,
+                                          sensitivityLabel=SensitivityLabel, users=users)
+            
         # process users
         if self.users!=None:
             for user in self.users:
@@ -407,9 +477,9 @@ class Dataset_table:
     """
     This class will be used to create the dataset table
     """
-    def __init__(self, id:str, name:str, workspaceId:str, tables:list, relationships:list,
-                 configuredBy:str, endorsementDetails:dict, expressions:list, roles:list,
-                 uptreamDataflows:list, datasourceUsages:list, sensitivityLabel:dict, users:list):
+    def __init__(self, id:str, name:str, workspaceId:str, tables:list,
+                 configuredBy:str, endorsementDetails:dict={}, relationships:list=[], expressions:list=[], roles:list=[],
+                 uptreamDataflows:list=[], datasourceUsages:list=[], sensitivityLabel:dict=[], users:list=[]):
         self.id = id
         self.name = name
         self.workspaceId = workspaceId
@@ -442,10 +512,18 @@ class Dataset_table:
             pass
 
         # process endorsementDetails
+        try:
+            endorsement = self.endorsementDetails['endorsement']
+        except:
+            endorsement = 'None'
+        try:
+            certifiedBy = self.endorsementDetails['certifiedBy']
+        except:
+            certifiedBy = 'None'
         my_endorsement = EndorsementDetails(fk_object_id=self.id,
                                             foreignKeyObjectType='dataset',
-                                            endorsement=self.endorsementDetails['endorsement'],
-                                            certifiedBy=self.endorsementDetails['certifiedBy'])
+                                            endorsement=endorsement,
+                                            certifiedBy=certifiedBy)
         # write to file
         my_endorsement_line = f'{my_endorsement.fk_object_id},{my_endorsement.foreignKeyObjectType},{my_endorsement.endorsement},{my_endorsement.certifiedBy}\n'
 
@@ -463,7 +541,7 @@ class Dataset_table:
                                           expression=expression['expression'])
             
             # write to file
-            my_expression_line = f'{my_expression.name},{my_expression.fk_dataset_id},{my_expression.description},{my_expression.expression}\n'
+            my_expression_line = f'{my_expression.name},{my_expression.fk_dataset_id},{my_expression.description},"""{my_expression.expression}"""\n'
             expression_file_writer = FileWriter(file_type='expression')
             if expression_file_writer.line_exists(my_expression_line):
                 pass
@@ -518,18 +596,20 @@ class Dataset_table:
 
 
         # process sensitivityLabel
-        
-        my_sensitivityLabel = SensitivityLabel(labelId=sensitivityLabel['labelId'],
-                                                fk_object_id=self.id,
-                                                foreignKeyObjectType='dataset')
-            
-        # write to file
-        my_sensitivityLabel_line = f'{my_sensitivityLabel.labelId},{my_sensitivityLabel.fk_object_id},{my_sensitivityLabel.foreignKeyObjectType}\n'
-        sensitivityLabel_file_writer = FileWriter(file_type='sensitivityLabel')
-        if sensitivityLabel_file_writer.line_exists(my_sensitivityLabel_line):
-            pass
+        if len(sensitivityLabel) == 0:
+            sensitivityLabel = [{'labelId': 'None'}]
         else:
-            sensitivityLabel_file_writer.append_line_to_file(my_sensitivityLabel_line)
+            my_sensitivityLabel = SensitivityLabel(labelId=sensitivityLabel['labelId'],
+                                                    fk_object_id=self.id,
+                                                    foreignKeyObjectType='dataset')
+                
+            # write to file
+            my_sensitivityLabel_line = f'{my_sensitivityLabel.labelId},{my_sensitivityLabel.fk_object_id},{my_sensitivityLabel.foreignKeyObjectType}\n'
+            sensitivityLabel_file_writer = FileWriter(file_type='sensitivityLabel')
+            if sensitivityLabel_file_writer.line_exists(my_sensitivityLabel_line):
+                pass
+            else:
+                sensitivityLabel_file_writer.append_line_to_file(my_sensitivityLabel_line)
 
 
         # process users

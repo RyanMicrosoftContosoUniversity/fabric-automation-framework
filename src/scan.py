@@ -8,7 +8,7 @@ class Scan:
     This will be used to initiate a scan and hold all data that results from a scan
     Will require an SPN instance to authenticate
     """
-    def __init__(self, spn:ServicePrincipal, modified_since=None, exclude_personal_workspaces=False, exclude_inactive_workspaces=False):
+    def __init__(self, spn:ServicePrincipal, modified_since=None, exclude_personal_workspaces=True, exclude_inactive_workspaces=False):
         self.spn = spn
         self.modified_since = modified_since
         self.exclude_personal_workspaces = exclude_personal_workspaces
@@ -27,8 +27,9 @@ class Scan:
 
         return list: ModifiedWorkspace: List of workspaces that have been modified.
         """
-        if self.modified_since==None and self.exclude_personal_workspaces==False and self.exclude_inactive_workspaces==False:
-            url = 'https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified'
+        if self.modified_since==None and self.exclude_personal_workspaces==True and self.exclude_inactive_workspaces==False:
+            # url = 'https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified'
+            url = f'https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified?excludePersonalWorkspaces={self.exclude_personal_workspaces}'
         else:
             pass
 

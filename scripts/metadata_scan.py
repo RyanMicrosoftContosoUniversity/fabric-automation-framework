@@ -18,5 +18,7 @@ scan = Scan(spn=spn)
 # pass scan request id to get scan status
 scan_status = scan.get_scan_status(scan_id=scan.scan_request['id'])
 
+# write scan to file in docs folder
+with open('docs/scan_response.json', 'w') as f:
+    json.dump(scan.scan_results, f, indent=4)
 
-print(scan.scan_results)
