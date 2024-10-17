@@ -30,16 +30,19 @@ To install the Fabric Automation Framework, clone the repository and install the
 git clone https://github.com/yourusername/fabric-automation-framework.git
 cd fabric-automation-framework
 pip install -e 
+```
 
-Usage
+## Usage
 Running the Metadata Scan Script
 The metadata_scan.py script is used to scan and retrieve metadata for modified workspaces. To run the script, use the following command:
 
+```
 python -m scripts.metadata_scan
+```
 
 Example
 Here's an example of how to use the ServicePrincipal class in your own scripts:
-
+```
 from src import service_principal
 import json
 
@@ -53,6 +56,6 @@ spn = service_principal.ServicePrincipal(
 
 modified_workspaces_list = spn.get_modified_workspaces()
 print(modified_workspaces_list)
-
+```
 
 
