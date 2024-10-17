@@ -643,7 +643,7 @@ class Dataset_table:
                 user_file_writer.append_line_to_file(my_user_line)
 
         # write dataset to file
-        dataset_line = f'{self.id},{self.name}, {self.workspaceId}\n'
+        dataset_line = f'{self.id},{self.name},{self.workspaceId}\n'
         dataset_file_writer = FileWriter(file_type='dataset')
         if dataset_file_writer.line_exists(dataset_line):
             pass

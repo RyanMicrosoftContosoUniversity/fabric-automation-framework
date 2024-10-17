@@ -28,7 +28,7 @@ class Scan:
         return list: ModifiedWorkspace: List of workspaces that have been modified.
         """
         if self.modified_since==None and self.exclude_personal_workspaces==True and self.exclude_inactive_workspaces==False:
-            # url = 'https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified'
+            
             url = f'https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified?excludePersonalWorkspaces={self.exclude_personal_workspaces}'
         else:
             pass

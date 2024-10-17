@@ -1,20 +1,58 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Fabric Automation Framework
+Note that this project is for POC purposes only.  Please see DISCLAIMER.md for more detials
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+A framework for automating tasks in a fabric environment.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Table of Contents
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Introduction
+
+The Fabric Automation Framework is designed to simplify and automate various tasks within a fabric environment. It provides a set of tools and scripts to manage and interact with different components of the fabric infrastructure.
+
+## Features
+
+- **Service Principal Management**: Easily manage service principals and their secrets.
+- **Workspace Management**: Automate the creation and modification of workspaces.
+- **Configuration Management**: Load and manage configuration data from JSON files.
+
+## Installation
+
+To install the Fabric Automation Framework, clone the repository and install the dependencies:
+
+```sh
+git clone https://github.com/yourusername/fabric-automation-framework.git
+cd fabric-automation-framework
+pip install -e 
+
+Usage
+Running the Metadata Scan Script
+The metadata_scan.py script is used to scan and retrieve metadata for modified workspaces. To run the script, use the following command:
+
+python -m scripts.metadata_scan
+
+Example
+Here's an example of how to use the ServicePrincipal class in your own scripts:
+
+from src import service_principal
+import json
+
+config_data = json.loads(open('docs/non-prod-spn-config.json').read())
+spn = service_principal.ServicePrincipal(
+    client_id=config_data['client_id'],
+    tenant_id=config_data['tenant_id'],
+    spn_secret_name=config_data['spn_secret_name'],
+    vault_url=config_data['vault_url']
+)
+
+modified_workspaces_list = spn.get_modified_workspaces()
+print(modified_workspaces_list)
+
+
+
