@@ -71,6 +71,7 @@ Create New Registration
 
 
 Assuming this will be done for a single AD/Entra Tenant, select Single tenant:
+
 ![Alt text](docs\images\App_Registration_2.png)
 
 
