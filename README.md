@@ -105,10 +105,12 @@ NOTE: Do not change Admin Consent Required to No as this will cause issues with 
     4. Create Security Groups
 
 Search for 'Microsoft Entra' in the Azure Portal and select Groups:
+
 ![Alt text](docs\images\Security_Groups_5.png)
 
 
 Create a new group of type 'Security' and add the SPN(s) created to the group:
+
 ![Alt text](docs\images\Security_Groups_6.png)
 
 
@@ -118,14 +120,19 @@ Create a new group of type 'Security' and add the SPN(s) created to the group:
 Navigate to the Power BI Admin Portal Tenant Settings
 
 Enable 'Service principals can use Fabric APIs for Specific Security Groups and add the group(s) you created:
+
 ![Alt text](docs\images\Tenant_Settings_7.png)
 
 
 
 Do the same for 'Service principals can access read-only admin APIs', 'Enhance admin APIs responses with detailed mnetadata' and 'Enhance admin APIs responses with DAX and mashup expressions'
+
 ![Alt text](docs\images\Tenant_Settings_8.png)
+
 ![Alt text](docs\images\Tenant_Settings_9.png)
+
 ![Alt text](docs\images\Tenant_Settings_10.png)
+
 
 
 
@@ -139,14 +146,20 @@ Access the POC Code:
 
     1. Navigate to fabric-automation-framework - Repos (azure.com)
     2. Clone the code in local git
+
 ![Alt text](docs\images\POC_11.png)
+
     3. Pip install the poc code:
+
 ![Alt text](docs\images\POC_12.png)
+
     4. Adjust the configuration file: docs\non-prod-spn-config.json to reflect your resources
+
 ![Alt text](docs\images\POC_12.png)
 
 
 To test locally, run the script at: scripts\metadata_scan.py to write the scan files to the local docs folder:
+
 ![Alt text](docs\images\POC_13.png)
 
 
