@@ -1,8 +1,8 @@
 {
-    "client_id": "b86b79cc-7f08-4c20-9ed6-0bdb91abb7b1",
-    "tenant_id": "35acf02c-4b87-4ae6-9221-ff5cafd430b4",
-    "authority": "https://login.microsoftonline.com/35acf02c-4b87-4ae6-9221-ff5cafd430b4",
+    "client_id": "CLIENT ID HERE",
+    "tenant_id": "TENANT ID HERE",
+    "authority": "https://login.microsoftonline.com/TENANT ID HERE",
     "scope": ["https://graph.microsoft.com/.default"],
-    "spn_secret_name": "spn-secret",
-    "vault_url": "https://kvfabricnonprodeus2rh.vault.azure.net/"
+    "spn_secret_name": "SPN SECRET NAME",
+    "vault_url": "KEY VAULT URL"
   }
