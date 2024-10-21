@@ -1,0 +1,4 @@
+*/__pycache__/
+fabric_automation_framework.egg-info/
+docs/sample_scan_response.json
+src/test.py

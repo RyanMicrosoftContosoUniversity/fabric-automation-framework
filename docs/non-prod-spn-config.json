@@ -1,0 +1,8 @@
+{
+    "client_id": "CLIENT ID HERE",
+    "tenant_id": "TENANT ID HERE",
+    "authority": "https://login.microsoftonline.com/TENANT ID HERE",
+    "scope": ["https://graph.microsoft.com/.default"],
+    "spn_secret_name": "SPN SECRET NAME",
+    "vault_url": "KEY VAULT URL"
+  }
