@@ -80,7 +80,7 @@ print(modified_workspaces_list)
 Search for 'App Registration' in Azure Portal
 Create New Registration
 
-![Alt text](docs\images\App_Registration_1.png)
+![Alt text](docs/images/App_Registration_1.png)
 
 
 Assuming this will be done for a single AD/Entra Tenant, select Single tenant:
