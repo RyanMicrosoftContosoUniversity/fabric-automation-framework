@@ -1,0 +1,9 @@
+*/__pycache__/
+fabric_automation_framework.egg-info/
+docs/sample_scan_response.json
+src/test.py
+docs/non-prod-spn-config.json
+docs/scan_response.json
+myvenv/
+build/
+dist/
