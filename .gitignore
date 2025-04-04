@@ -7,3 +7,4 @@ docs/scan_response.json
 myvenv/
 build/
 dist/
+fabric_automation_framework_no_notebookutils.egg-info/
