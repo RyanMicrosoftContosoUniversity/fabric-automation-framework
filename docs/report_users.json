@@ -1,0 +1,93 @@
+{
+    "e5a88acd-75dc-41ae-ab52-9878beb482e3": {
+        "name": "Sample Dataset",
+        "users": [
+            {
+                "reportUserAccessRight": "Owner",
+                "emailAddress": "admin@MngEnvMCAP372892.onmicrosoft.com",
+                "displayName": "System Administrator",
+                "identifier": "admin@MngEnvMCAP372892.onmicrosoft.com",
+                "graphId": "c65f2c4b-7fe6-4274-b8c9-2bcfbb6d784b",
+                "principalType": "User",
+                "userType": "Member"
+            },
+            {
+                "reportUserAccessRight": "ReadReshare",
+                "displayName": "Whole Organization",
+                "identifier": "35acf02c-4b87-4ae6-9221-ff5cafd430b4",
+                "graphId": "35acf02c-4b87-4ae6-9221-ff5cafd430b4",
+                "principalType": "None"
+            },
+            {
+                "reportUserAccessRight": "Owner",
+                "displayName": "fabric-prod-spn",
+                "identifier": "557fcf74-476a-4139-8d37-fb6b81cc4b92",
+                "graphId": "15a84224-c1e2-45e0-a2f5-fc8f5206f81d",
+                "principalType": "App"
+            }
+        ]
+    },
+    "37626dab-7fef-4f0c-b886-af1bf0f7a056": {
+        "name": "[App] Sample Dataset",
+        "users": [
+            {
+                "reportUserAccessRight": "ReadCopy",
+                "emailAddress": "admin@MngEnvMCAP372892.onmicrosoft.com",
+                "displayName": "System Administrator",
+                "identifier": "admin@MngEnvMCAP372892.onmicrosoft.com",
+                "graphId": "c65f2c4b-7fe6-4274-b8c9-2bcfbb6d784b",
+                "principalType": "User",
+                "userType": "Member"
+            },
+            {
+                "reportUserAccessRight": "ReadCopy",
+                "displayName": "fabric-prod-spn",
+                "identifier": "557fcf74-476a-4139-8d37-fb6b81cc4b92",
+                "graphId": "15a84224-c1e2-45e0-a2f5-fc8f5206f81d",
+                "principalType": "App"
+            }
+        ]
+    },
+    "939ee728-dc4a-4fcb-bb9c-69483da33249": {
+        "name": "Store Sales",
+        "users": [
+            {
+                "reportUserAccessRight": "Owner",
+                "emailAddress": "admin@MngEnvMCAP372892.onmicrosoft.com",
+                "displayName": "System Administrator",
+                "identifier": "admin@MngEnvMCAP372892.onmicrosoft.com",
+                "graphId": "c65f2c4b-7fe6-4274-b8c9-2bcfbb6d784b",
+                "principalType": "User",
+                "userType": "Member"
+            },
+            {
+                "reportUserAccessRight": "ReadWrite",
+                "displayName": "copilot-workspace",
+                "identifier": "2ba145d7-a615-4059-9d49-258708c3ec2e",
+                "graphId": "4534cee4-0ced-4e0d-b6d3-ea7716a55f3b",
+                "principalType": "App"
+            }
+        ]
+    },
+    "b1f6d1b2-457f-4cf8-823f-8baab9d001b4": {
+        "name": "[App] Store Sales",
+        "users": [
+            {
+                "reportUserAccessRight": "ReadCopy",
+                "emailAddress": "admin@MngEnvMCAP372892.onmicrosoft.com",
+                "displayName": "System Administrator",
+                "identifier": "admin@MngEnvMCAP372892.onmicrosoft.com",
+                "graphId": "c65f2c4b-7fe6-4274-b8c9-2bcfbb6d784b",
+                "principalType": "User",
+                "userType": "Member"
+            },
+            {
+                "reportUserAccessRight": "ReadCopy",
+                "displayName": "copilot-workspace",
+                "identifier": "2ba145d7-a615-4059-9d49-258708c3ec2e",
+                "graphId": "4534cee4-0ced-4e0d-b6d3-ea7716a55f3b",
+                "principalType": "App"
+            }
+        ]
+    }
+}

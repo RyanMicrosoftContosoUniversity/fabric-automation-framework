@@ -5,17 +5,16 @@ with open(file="README.md", mode="r") as fh:
     long_description = fh.read()
 
 setup(
-    name='fabric-automation-framework',
-    version='0.1.0',
+    name='fabric_automation_framework',
+    version='0.4.0',
     install_requires=[
         'msal',
         'azure-identity',
         'azure-keyvault-secrets',
         'requests'
     ],
-    packages=find_packages(
-        include=['src']
-    ),
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
     entry_points={
         'console_scripts': [
             # Define command-line scripts here, e.g.,

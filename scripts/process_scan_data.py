@@ -3,6 +3,7 @@ Test file for performing etl on scan results
 """
 import json
 import src.table as table   
+from src.activity_events import ActivityLogs
 
 
 source_file = 'docs\scan_response.json'

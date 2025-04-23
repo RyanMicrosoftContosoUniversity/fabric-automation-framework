@@ -1,7 +1,6 @@
 import json
-from src.service_principal import ServicePrincipal
-from src.activity_events import ActivityLogs
-
+from fabric_automation_framework.activity_events import ActivityLogs
+from fabric_automation_framework.service_principal import ServicePrincipal
 
 # # test
 config_data = json.loads(open('docs/non-prod-spn-config.json').read())
