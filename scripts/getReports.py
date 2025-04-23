@@ -115,5 +115,3 @@ with open('docs/report_users.json', 'w') as f:
 
 
 
-
-

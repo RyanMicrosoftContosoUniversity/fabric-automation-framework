@@ -4,6 +4,7 @@ import json
 import time
 import requests
 
+
 class FabricDataPipelineRun:
     """
     This will be used to initiate a scan and hold all data that results from a scan
@@ -48,6 +49,17 @@ class FabricDataPipelineRun:
         return job_id
 
     @staticmethod
+    def refresh_token(func):
+        """
+        Decorator to refresh the access token if it is about to expire.
+        """
+        def wrapper(self, *args, **kwargs):
+            self.check_and_refresh_token()
+            return func(self, *args, **kwargs)
+        return wrapper
+
+    @refresh_token
+    @staticmethod
     def check_job_status(spn:ServicePrincipal, workspace_id:str, pipeline_id:str, job_id:str) -> dict:
         """
         Check the status of a job given its ID.
@@ -66,10 +78,7 @@ class FabricDataPipelineRun:
         else:
             raise Exception(f"Failed to get job status: {response.status_code} {response.text}")
         
-
         
-
-
 
 # base tests
 config_data = json.loads(open('docs/non-prod-spn-config.json').read())
