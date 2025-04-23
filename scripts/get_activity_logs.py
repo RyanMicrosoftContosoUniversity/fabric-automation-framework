@@ -1,18 +1,6 @@
 import json
-<<<<<<< HEAD
-<<<<<<< HEAD
-from src.activity_events import ActivityLogs
-from src.service_principal import ServicePrincipal
-
-=======
-from src.service_principal import ServicePrincipal
-from src.activity_events import ActivityLogs
->>>>>>> dcbbff9 (Added activity logs functionality)
-=======
-from src.activity_events import ActivityLogs
-from src.service_principal import ServicePrincipal
->>>>>>> 77c23bc (added all updates)
-
+from fabric_automation_framework.activity_events import ActivityLogs
+from fabric_automation_framework.service_principal import ServicePrincipal
 
 # # test
 config_data = json.loads(open('docs/non-prod-spn-config.json').read())
