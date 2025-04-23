@@ -9,3 +9,4 @@ build/
 dist/
 fabric_automation_framework_no_notebookutils.egg-info/
 docs/sql_master_create_tables_config.yaml
+
