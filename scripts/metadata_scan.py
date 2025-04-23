@@ -1,8 +1,7 @@
 from src.service_principal import ServicePrincipal
 from src.scan import Scan   
 import json
-
-
+import time
 
 # base tests
 config_data = json.loads(open('docs/non-prod-spn-config.json').read())
@@ -16,9 +15,15 @@ spn = ServicePrincipal(
 scan = Scan(spn=spn)
 
 # pass scan request id to get scan status
-scan_status = scan.get_scan_status(scan_id=scan.scan_request['id'])
+scan_status = 'inProgress'
+while scan_status == 'inProgress':
+    scan_status = scan.get_scan_status(scan_id=scan.scan_request['id'])
+    time.sleep(30)
+
+scan_results = scan.get_scan_result(scan_id=scan.scan_request['id'])
 
 # write scan to file in docs folder
 with open('docs/scan_response.json', 'w') as f:
-    json.dump(scan.scan_results, f, indent=4)
+    json.dump(scan_results, f, indent=4)
+
 
