@@ -11,6 +11,7 @@ from bcpandas import SqlCreds, to_sql
 import logging
 import yaml
 
+
 # configure logging
 logging.basicConfig(filename='logs\sql_error_log.log', level=logging.ERROR,
                     format='%(asctime)s:%(levelname)s:%(message)s')
@@ -22,6 +23,7 @@ with open('docs\sql_master_create_tables_config.yaml', 'r') as file:
 # get sql admin credentials
 key_vault_name = config['key_vault_name']
 secret_name = config['secret_name']
+
 
 # Construct the Key Vault URL
 key_vault_url = f'https://{key_vault_name}.vault.azure.net/'
@@ -36,7 +38,6 @@ client = SecretClient(vault_url=key_vault_url, credential=credential)
 retrieved_secret = client.get_secret(secret_name)
 
 # define connection string
-
 creds = SqlCreds(
     server=config['sqlCreds']['server'],
     database=config['sqlCreds']['database'],
@@ -45,6 +46,7 @@ creds = SqlCreds(
 )
 
 conn_str_2 = f'Driver={"ODBC Driver 17 for SQL Server"};Server=tcp:{config['sqlCreds']['server']},1433;Database={config['sqlCreds']['database']};Uid={config['sqlCreds']['username']};Pwd={retrieved_secret.value};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=60;'
+
 # establish the connection
 conn = pyodbc.connect(conn_str_2)
 cursor = conn.cursor()

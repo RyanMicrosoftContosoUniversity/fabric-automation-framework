@@ -3,7 +3,6 @@ from src.scan import Scan
 import json
 import time
 
-
 # base tests
 config_data = json.loads(open('docs/non-prod-spn-config.json').read())
 spn = ServicePrincipal(
@@ -26,4 +25,5 @@ scan_results = scan.get_scan_result(scan_id=scan.scan_request['id'])
 # write scan to file in docs folder
 with open('docs/scan_response.json', 'w') as f:
     json.dump(scan_results, f, indent=4)
+
 
