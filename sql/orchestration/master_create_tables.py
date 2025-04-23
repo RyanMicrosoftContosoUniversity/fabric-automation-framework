@@ -9,14 +9,19 @@ import pyodbc
 import pandas as pd
 from bcpandas import SqlCreds, to_sql
 import logging
+import yaml
 
 # configure logging
 logging.basicConfig(filename='logs\sql_error_log.log', level=logging.ERROR,
                     format='%(asctime)s:%(levelname)s:%(message)s')
 
+# get config values from file
+with open('docs\sql_master_create_tables_config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
+
 # get sql admin credentials
-key_vault_name = 'kvfabricnonprodeus2rh'
-secret_name = 'sql-admin-credentials'
+key_vault_name = config['key_vault_name']
+secret_name = config['secret_name']
 
 # Construct the Key Vault URL
 key_vault_url = f'https://{key_vault_name}.vault.azure.net/'
@@ -31,25 +36,15 @@ client = SecretClient(vault_url=key_vault_url, credential=credential)
 retrieved_secret = client.get_secret(secret_name)
 
 # define connection string
-conn_str = (
-    f'DRIVER={"ODBC Driver 17 for SQL Server"};'
-    f'SERVER=:tcp:fabric-metadata-server.database.windows.net,1433'
-    f'DATABASE=fabric-metadata-db;'
-    f'UID=rharrington;'
-    f'PWD={retrieved_secret.value}'
-    f'Encrypt=yes;'
-    f'TrustServerCertificate=no;'
-    f'Connection Timeout=60;'
-)
 
 creds = SqlCreds(
-    server='fabric-metadata-server.database.windows.net',
-    database='fabric-metadata-db',
-    username='rharrington',
+    server=config['sqlCreds']['server'],
+    database=config['sqlCreds']['database'],
+    username=config['sqlCreds']['username'],
     password=retrieved_secret.value
 )
 
-conn_str_2 = f'Driver={"ODBC Driver 17 for SQL Server"};Server=tcp:fabric-metadata-server.database.windows.net,1433;Database=fabric-metadata-db;Uid=rharrington;Pwd={retrieved_secret.value};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=60;'
+conn_str_2 = f'Driver={"ODBC Driver 17 for SQL Server"};Server=tcp:{config['sqlCreds']['server']},1433;Database={config['sqlCreds']['database']};Uid={config['sqlCreds']['username']};Pwd={retrieved_secret.value};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=60;'
 # establish the connection
 conn = pyodbc.connect(conn_str_2)
 cursor = conn.cursor()
