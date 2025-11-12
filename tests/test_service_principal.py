@@ -1,11 +1,11 @@
 import pytest
 from unittest.mock import patch, MagicMock
 import time
-from fabric_automation_framework.service_principal import ServicePrincipal
+from fabric_utils.service_principal import ServicePrincipal
 
 @pytest.fixture
 def mock_secret_client():
-    with patch('fabric_automation_framework.service_principal.SecretClient') as mock_client:
+    with patch('fabric_utils.service_principal.SecretClient') as mock_client:
         mock_instance = MagicMock()
         mock_instance.get_secret.return_value.value = "mock_client_secret"
         mock_client.return_value = mock_instance
@@ -13,12 +13,12 @@ def mock_secret_client():
 
 @pytest.fixture
 def mock_default_azure_credential():
-    with patch('fabric_automation_framework.service_principal.DefaultAzureCredential') as mock_credential:
+    with patch('fabric_utils.service_principal.DefaultAzureCredential') as mock_credential:
         yield mock_credential
 
 @pytest.fixture
 def mock_confidential_client_application():
-    with patch('fabric_automation_framework.service_principal.msal.ConfidentialClientApplication') as mock_app:
+    with patch('fabric_utils.service_principal.msal.ConfidentialClientApplication') as mock_app:
         mock_instance = MagicMock()
         mock_instance.acquire_token_for_client.return_value = {'access_token': 'mock_access_token', 'expires_in': 60}
         mock_app.return_value = mock_instance

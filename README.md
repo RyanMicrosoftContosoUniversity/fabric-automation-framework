@@ -1,4 +1,4 @@
-# Fabric Automation Framework
+# Fabric Utils Framework
 Note that this project is for POC purposes only.  Please see DISCLAIMER.md for more details
 
 
@@ -27,7 +27,7 @@ A framework for automating tasks in a fabric environment.
 
 ## Introduction
 
-The Fabric Automation Framework is designed to simplify and automate various tasks within a fabric environment. It provides a set of tools and scripts to manage and interact with different components of the fabric infrastructure.
+The Fabric Utils Framework is designed to simplify and automate various tasks within a fabric environment. It provides a set of tools and scripts to manage and interact with different components of the fabric infrastructure.
 
 ## Features
 
@@ -37,11 +37,11 @@ The Fabric Automation Framework is designed to simplify and automate various tas
 
 ## Installation
 
-To install the Fabric Automation Framework, clone the repository and install the dependencies:
+To install the Fabric Utils Framework, clone the repository and install the dependencies:
 
 ```sh
-git clone https://github.com/yourusername/fabric-automation-framework.git
-cd fabric-automation-framework
+git clone https://github.com/yourusername/fabric-utils.git
+cd fabric-utils
 pip install -e 
 ```
 
@@ -56,7 +56,7 @@ python -m scripts.metadata_scan
 ## Example
 Here's an example of how to use the ServicePrincipal class in your own scripts:
 ```
-from src import service_principal
+from fabric_utils import service_principal
 import json
 
 config_data = json.loads(open('docs/non-prod-spn-config.json').read())
@@ -158,7 +158,7 @@ Do the same for 'Service principals can access read-only admin APIs', 'Enhance a
 
 Access the POC Code:
 
-    1. Navigate to fabric-automation-framework - Repos (azure.com)
+    1. Navigate to fabric-utils - Repos (azure.com)
     2. Clone the code in local git
 
 ![Alt text](docs/images/POC_11.png)

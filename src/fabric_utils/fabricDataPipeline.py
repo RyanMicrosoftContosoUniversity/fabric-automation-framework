@@ -1,4 +1,4 @@
-from src.service_principal import ServicePrincipal
+from .service_principal import ServicePrincipal
 import json
 import time
 import requests

@@ -1,5 +1,5 @@
-from fabric_automation_framework.service_principal import ServicePrincipal
-from fabric_automation_framework.fabricDataPipeline import FabricDataPipelineRun
+from fabric_utils.service_principal import ServicePrincipal
+from fabric_utils.fabricDataPipeline import FabricDataPipelineRun
 import json
 import time
 import requests

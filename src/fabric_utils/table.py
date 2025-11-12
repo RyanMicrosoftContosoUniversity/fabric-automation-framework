@@ -2,7 +2,7 @@
 This module will be used for table objects within the metadata database
 This will take results from the scan and create tables in the metadata database
 """
-from src.table_writer import TableWriter, FileWriter
+from .table_writer import TableWriter, FileWriter
 
 class EndorsementDetails:
     """
