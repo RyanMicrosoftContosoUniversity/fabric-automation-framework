@@ -1,6 +1,6 @@
 import pytest
-from fabric_automation_framework.service_principal import ServicePrincipal
-from fabric_automation_framework.fabric_capacity import Extract, FabricCapacitiesBySubscription, FabricCapacityMGMT
+from fabric_utils.service_principal import ServicePrincipal
+from fabric_utils.fabric_capacity import Extract, FabricCapacitiesBySubscription, FabricCapacityMGMT
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -40,7 +40,7 @@ def test_list_capacities_by_resource_group(mocker):
     mock_rg_name = os.getenv('RESOURCE_GROUP')
 
     # Mock the FabricMgmtClient and its list_by_resource_group method
-    mock_client = mocker.patch("fabric_automation_framework.fabric_capacity.FabricMgmtClient")
+    mock_client = mocker.patch("fabric_utils.fabric_capacity.FabricMgmtClient")
     mock_client_instance = mock_client.return_value
     mock_client_instance.fabric_capacities.list_by_resource_group.return_value = [
         {"name": "capacity1"},
@@ -72,7 +72,7 @@ def test_pause_capacity_already_paused(mocker):
     mock_capacity_name = "test-capacity"
 
     # Mock the FabricMgmtClient and its methods
-    mock_client = mocker.patch("fabric_automation_framework.fabric_capacity.FabricMgmtClient")
+    mock_client = mocker.patch("fabric_utils.fabric_capacity.FabricMgmtClient")
     mock_client_instance = mock_client.return_value
     mock_client_instance.fabric_capacities.get.return_value = {
         "properties": {"state": "Paused"}
@@ -103,7 +103,7 @@ def test_pause_capacity_not_paused(mocker):
     mock_capacity_name = "test-capacity"
 
     # Mock the FabricMgmtClient and its methods
-    mock_client = mocker.patch("fabric_automation_framework.fabric_capacity.FabricMgmtClient")
+    mock_client = mocker.patch("fabric_utils.fabric_capacity.FabricMgmtClient")
     mock_client_instance = mock_client.return_value
     mock_client_instance.fabric_capacities.get.side_effect = [
         {"properties": {"state": "Running"}},  # Initial state
@@ -136,7 +136,7 @@ def test_resume_capacity(mocker):
     mock_capacity_name = "test-capacity"
 
     # Mock the FabricMgmtClient and its methods
-    mock_client = mocker.patch("fabric_automation_framework.fabric_capacity.FabricMgmtClient")
+    mock_client = mocker.patch("fabric_utils.fabric_capacity.FabricMgmtClient")
     mock_client_instance = mock_client.return_value
     mock_client_instance.fabric_capacities.get.side_effect = [
         {"properties": {"state": "Paused"}},  # Initial state

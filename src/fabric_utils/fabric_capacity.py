@@ -17,7 +17,7 @@ Update
 """
 from azure.identity import DefaultAzureCredential, ClientSecretCredential
 from azure.mgmt.fabric import FabricMgmtClient
-from fabric_automation_utils.service_principal import ServicePrincipal
+from .service_principal import ServicePrincipal
 import json
 import re
 from azure.keyvault.secrets import SecretClient

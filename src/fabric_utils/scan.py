@@ -1,6 +1,6 @@
 import requests
 import json
-from src.service_principal import ServicePrincipal
+from .service_principal import ServicePrincipal
 
 
 class Scan:

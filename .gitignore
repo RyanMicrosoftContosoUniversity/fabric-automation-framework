@@ -1,5 +1,5 @@
 */__pycache__/
-fabric_automation_framework.egg-info/
+fabric_utils.egg-info/
 docs/sample_scan_response.json
 src/test.py
 docs/non-prod-spn-config.json
@@ -7,6 +7,16 @@ docs/scan_response.json
 myvenv/
 build/
 dist/
-fabric_automation_framework_no_notebookutils.egg-info/
+fabric_utils_no_notebookutils.egg-info/
 docs/sql_master_create_tables_config.yaml
-
+tests/.env
+Untitled-1.excalidraw
+docs/add-control-table-entry.yaml
+docs/add-control-table-wwi-customer-address.yml
+docs/adf-api-csn.excalidraw
+docs/adf-api-csn.excalidraw
+docs/msgraph-requirements.txt
+docs/msgraph-requirements.yml
+docs/networking.excalidraw
+docs/vnet-data-gw.excalidraw
+docs/wwi-files-bronze-mapping.yml
