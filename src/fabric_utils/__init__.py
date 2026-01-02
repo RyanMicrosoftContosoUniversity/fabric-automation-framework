@@ -3,7 +3,7 @@ from . import API_Utils
 from . import activity_events
 from . import dataset
 from . import fabric_capacity
-from . import fabric_pyspark_utils
+# from . import fabric_pyspark_utils  # Commented out - requires pyspark which isn't available in Azure Functions
 from . import scan
 from . import service_principal
 from . import table
@@ -16,7 +16,7 @@ __all__ = [
     'activity_events',
     'dataset',
     'fabric_capacity',
-    'fabric_pyspark_utils',
+    # 'fabric_pyspark_utils',  # Commented out - requires pyspark
     'scan',
     'service_principal',
     'table',
