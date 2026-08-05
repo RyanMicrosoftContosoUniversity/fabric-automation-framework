@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "test_token_utils_runtime",
+    "description": "Fabric runtime and package import smoke tests for fabric_utils.token_utils."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "eb4a0e87-2862-9433-42bd-9391da953d6b"
+  }
+}
