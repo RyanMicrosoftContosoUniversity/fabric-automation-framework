@@ -16,26 +16,14 @@ default_args = {
 }
 
 ### variables
-kv_uri = 'https://kvfabricprodeus2rh.vault.azure.net/'
-client_id_secret = 'fuam-spn-client-id'
-tenant_id_secret = 'fuam-spn-tenant-id'
-client_secret_name = 'fuam-spn-secret'
-
 workspace_id = '896bca78-0d4a-4dc9-8716-05539ecf4ea5'
 notebook_id = 'faf89dba-9ea9-4c83-b6e8-faca61764d2e'
 
 
 def task_python_notebook(**context):
 
-    # create client
-    client = Client(client_id = client_id_secret,
-     tenant_id = tenant_id_secret,
-    spn_secret_name = client_secret_name,
-    vault_url = kv_uri)
-
-    # get token for client client.access_token
-    
-
+    # credentials come from the CLIENT_ID / TENANT_ID / CLIENT_SECRET env vars
+    client = Client.from_connection('fabric_spn')
 
     # create payload
     driver_memory = '28g'
@@ -43,10 +31,14 @@ def task_python_notebook(**context):
     executor_memory = '56g'
     executor_cores = 4
     num_executors = 5
-    payload = FabricNotebookRuns.build_notebook_execution_payload(driver_memory, driver_cores, executor_memory, executor_cores, num_executors)
+    payload = FabricNotebookRuns.build_notebook_execution_payload(
+        driver_memory, driver_cores, executor_memory, executor_cores, num_executors
+    )
 
     # execute notebook
-    res = FabricNotebookRuns.post_run_notebook(workspace_id, notebook_id, client.access_token, req_payload=test_payload_1, beta='false')
+    res = FabricNotebookRuns.post_run_notebook(
+        workspace_id, notebook_id, client.access_token, req_payload=payload, beta='false'
+    )
 
     # get response details
     run_details = FabricNotebookRuns.get_notebook_run_details(res, client.access_token)

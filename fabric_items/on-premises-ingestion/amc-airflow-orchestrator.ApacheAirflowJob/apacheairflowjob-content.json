@@ -9,12 +9,11 @@
         "airflowVersion": "2.10.5",
         "enableAADIntegration": true,
         "enableTriggerers": false,
-        "environmentVariables": {
-          "CLIENT_ID": "11111111-2222-3333-4444-555555555555",
-          "TENANT_ID": "35acf02c-4b87-4ae6-9221-ff5cafd430b4"
-        },
+        "environmentVariables": {},
+        "libraryVariables": {},
         "packageProviderPath": "plugins",
-        "pythonVersion": "3.12"
+        "pythonVersion": "3.12",
+        "secrets": []
       },
       "computeProperties": {
         "autoScaleMaxNodes": 8,
