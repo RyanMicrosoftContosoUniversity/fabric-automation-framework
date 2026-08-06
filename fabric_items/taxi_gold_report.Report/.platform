@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "taxi_gold_report",
+    "description": "NYC taxi medallion gold-layer report (Direct Lake)"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c7527093-4e59-a0f2-4db7-543e42e7fa41"
+  }
+}

@@ -1,0 +1,29 @@
+table nyc_taxi_hourly_demand
+
+	measure 'Hourly Trips' = SUM(nyc_taxi_hourly_demand[trip_count])
+		formatString: #,##0
+
+	measure 'Peak Hour Trips' = MAXX(VALUES(nyc_taxi_hourly_demand[pickup_hour]), [Hourly Trips])
+		formatString: #,##0
+
+	column pickup_hour
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: pickup_hour
+
+	column trip_count
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: trip_count
+
+	column avg_total
+		dataType: double
+		summarizeBy: average
+		sourceColumn: avg_total
+
+	partition nyc_taxi_hourly_demand = entity
+		mode: directLake
+		source
+			entityName: nyc_taxi_hourly_demand
+			expressionSource: DL_GoldLakehouse
+

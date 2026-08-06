@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "vcolhour01",
+  "position": {
+    "x": 16,
+    "y": 172,
+    "z": 0,
+    "width": 616,
+    "height": 280,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_taxi_hourly_demand"
+                    }
+                  },
+                  "Property": "pickup_hour"
+                }
+              },
+              "queryRef": "nyc_taxi_hourly_demand.pickup_hour"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_taxi_hourly_demand"
+                    }
+                  },
+                  "Property": "Hourly Trips"
+                }
+              },
+              "queryRef": "nyc_taxi_hourly_demand.Hourly Trips"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

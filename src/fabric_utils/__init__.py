@@ -3,7 +3,13 @@ from . import API_Utils
 from . import activity_events
 from . import dataset
 from . import fabric_capacity
-from . import pyspark_utils
+# pyspark_utils needs pyspark, which isn't installed in every consumer runtime
+# (Azure Functions, Airflow workers). Import it optionally so those environments
+# can still use the rest of the package.
+try:
+    from . import pyspark_utils
+except ImportError:  # pragma: no cover
+    pyspark_utils = None
 from . import scan
 from . import service_principal
 from . import table
