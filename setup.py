@@ -6,7 +6,7 @@ with open(file="README.md", mode="r") as fh:
 
 setup(
     name='fabric_utils',
-    version='0.9.0',
+    version='0.11.1',
     install_requires=[
         'msal',
         'azure-identity',
@@ -24,8 +24,8 @@ setup(
     },
     include_package_data=True,
     description='A framework for fabric automation',
-    author='Fabric Utils Team',
-    author_email='fabric-utils@example.com',
+    author='RH',
+    author_email='RH@gmail.com',
     url='https://github.com/yourusername/fabric-utils',
     classifiers=[
         'Programming Language :: Python :: 3',

@@ -1,5 +1,10 @@
-*/__pycache__/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
 fabric_utils.egg-info/
+*.egg-info/
 docs/sample_scan_response.json
 src/test.py
 docs/non-prod-spn-config.json
