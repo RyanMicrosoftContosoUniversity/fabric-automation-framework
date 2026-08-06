@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "ApacheAirflowJob",
+    "displayName": "amc-airflow-orchestrator"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a9613d44-5300-829d-49aa-77ccc08791b3"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "vcardtrip1",
+  "position": {
+    "x": 332,
+    "y": 16,
+    "z": 0,
+    "width": 300,
+    "height": 140,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_taxi_daily_summary"
+                    }
+                  },
+                  "Property": "Total Trips"
+                }
+              },
+              "queryRef": "nyc_taxi_daily_summary.Total Trips"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

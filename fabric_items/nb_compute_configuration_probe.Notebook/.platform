@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_compute_configuration_probe",
+    "description": "Validation-only probe that emits effective Fabric Spark compute configuration as JSON."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2270206c-13f1-9c4b-406c-8a42ab554b94"
+  }
+}

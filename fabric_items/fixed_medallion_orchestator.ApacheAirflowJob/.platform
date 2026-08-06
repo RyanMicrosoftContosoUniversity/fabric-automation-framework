@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "ApacheAirflowJob",
+    "displayName": "fixed_medallion_orchestator"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "20e0bba8-542e-b315-4933-a2d72c8d559e"
+  }
+}

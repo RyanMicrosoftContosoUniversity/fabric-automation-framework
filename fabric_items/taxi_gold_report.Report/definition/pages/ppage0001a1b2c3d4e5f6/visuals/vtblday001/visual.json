@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "vtblday001",
+  "position": {
+    "x": 16,
+    "y": 468,
+    "z": 0,
+    "width": 1248,
+    "height": 236,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_taxi_daily_summary"
+                    }
+                  },
+                  "Property": "trip_date"
+                }
+              },
+              "queryRef": "nyc_taxi_daily_summary.trip_date"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_taxi_daily_summary"
+                    }
+                  },
+                  "Property": "Total Trips"
+                }
+              },
+              "queryRef": "nyc_taxi_daily_summary.Total Trips"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_taxi_daily_summary"
+                    }
+                  },
+                  "Property": "Total Revenue"
+                }
+              },
+              "queryRef": "nyc_taxi_daily_summary.Total Revenue"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_taxi_daily_summary"
+                    }
+                  },
+                  "Property": "Avg Fare"
+                }
+              },
+              "queryRef": "nyc_taxi_daily_summary.Avg Fare"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_taxi_daily_summary"
+                    }
+                  },
+                  "Property": "Tip Rate %"
+                }
+              },
+              "queryRef": "nyc_taxi_daily_summary.Tip Rate %"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

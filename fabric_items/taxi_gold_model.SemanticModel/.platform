@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "taxi_gold_model",
+    "description": "Direct Lake model over the gold medallion layer (NYC taxi)"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "547bd103-1dfe-a690-4463-98c0d12f6652"
+  }
+}

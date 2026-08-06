@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SQLDatabase",
+    "displayName": "airflow_config",
+    "description": "SQL control plane for medallion notebook compute configuration"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "059616de-0c99-b1bc-468a-c9d68c3d270b"
+  }
+}

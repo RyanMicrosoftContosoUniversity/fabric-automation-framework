@@ -1,0 +1,62 @@
+table nyc_taxi_daily_summary
+
+	measure 'Total Revenue' = SUM(nyc_taxi_daily_summary[total_revenue])
+		formatString: \$#,##0.00
+
+	measure 'Total Trips' = SUM(nyc_taxi_daily_summary[trip_count])
+		formatString: #,##0
+
+	measure 'Total Tips' = SUM(nyc_taxi_daily_summary[total_tips])
+		formatString: \$#,##0.00
+
+	measure 'Avg Fare' = AVERAGE(nyc_taxi_daily_summary[avg_fare])
+		formatString: \$#,##0.00
+
+	measure 'Avg Trip Minutes' = AVERAGE(nyc_taxi_daily_summary[avg_trip_minutes])
+		formatString: #,##0.0
+
+	measure 'Tip Rate %' = DIVIDE([Total Tips], [Total Revenue])
+		formatString: 0.0%
+
+	column trip_date
+		dataType: dateTime
+		formatString: Long Date
+		summarizeBy: none
+		sourceColumn: trip_date
+
+	column trip_count
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: trip_count
+
+	column total_revenue
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: total_revenue
+
+	column avg_fare
+		dataType: double
+		summarizeBy: average
+		sourceColumn: avg_fare
+
+	column avg_distance
+		dataType: double
+		summarizeBy: average
+		sourceColumn: avg_distance
+
+	column avg_trip_minutes
+		dataType: double
+		summarizeBy: average
+		sourceColumn: avg_trip_minutes
+
+	column total_tips
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: total_tips
+
+	partition nyc_taxi_daily_summary = entity
+		mode: directLake
+		source
+			entityName: nyc_taxi_daily_summary
+			expressionSource: DL_GoldLakehouse
+
